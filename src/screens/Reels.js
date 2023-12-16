@@ -6,6 +6,9 @@ import ReelsComponent from '../screenComponents/ReelsComponent'
 const Reels = () => {
     const windoWidth = Dimensions.get('window').width
     const windowHeight = Dimensions.get('window').height
+
+
+    
     return (
         <View style={{
             marginTop:0,
@@ -13,6 +16,9 @@ const Reels = () => {
             height: windowHeight,
             // backgroundColor: 'black'
         }}>
+
+            {/* Reels Header */}
+            
             <View style={{
                 position: 'absolute',
                 top: 30,
@@ -34,6 +40,8 @@ const Reels = () => {
             </View>
 
             <ReelsComponent />
+
+            {/* <Text>vsd</Text> */}
         </View>
     )
 }

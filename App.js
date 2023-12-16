@@ -1,30 +1,49 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, Dimensions, View } from 'react-native';
+
 import Ionic from "react-native-vector-icons/Ionicons"
+
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { useFonts } from "expo-font";
+import { useEffect } from "react";
+
+
+
+
+// import * as SplashScreen from "expo-splash-screen";
+// SplashScreen.preventAutoHideAsync();
+
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
 import Reels from './src/screens/Reels';
 import Profile from './src/screens/Profile';
 
 
+export default function App() {  
+  
+  const [fontsLoaded] = useFonts({
+    "Os_Condensed-medium": require("./assets/fonts/OpenSans_Condensed-Medium.ttf"),
+    "Os_Condensed-regular": require("./assets/fonts/OpenSans_Condensed-Regular.ttf"),
+    "Os_Condensed-semi_bold": require("./assets/fonts/OpenSans_Condensed-SemiBold.ttf"),
+  });
 
+  useEffect(() => {
+    async function loadFont() {
+      if (fontsLoaded) {
+        await SplashScreen.hideAsync();
+      }
+    }
+    loadFont();
+  }, [fontsLoaded]);
 
+  if (!fontsLoaded) {
+    return null;
+  }
 
-export default function App() {
-
-
-  const windoWidth = Dimensions.get('window').width
-  const windowHeight = Dimensions.get('window').height
-
-
-  const Stack = createNativeStackNavigator();
 
   const Tab = createBottomTabNavigator();
 
+  // Method for BottomTabScreen Better to create External one
   const BottomTabScreen = () => {
     return (
 
@@ -53,39 +72,21 @@ export default function App() {
             }
            return <Ionic name={iconName} size={size} color={colour} />
           }
-
         })}>
-
-
-
-        <Tab.Screen name="Home" component={Reels} options={{ headerShown: false }} />
+        <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Reels" component={Reels} options={{ headerShown: false }} />
         <Tab.Screen name="Profile" component={Profile} />
-
-
-
-
       </Tab.Navigator>)
   }
-  
+
+ 
   return (
     <NavigationContainer >
-      <StatusBar style="auto" />
-
-      {/* <Stack.Navigator> */}
+      {/* <StatusBar style="auto" /> */}
       <BottomTabScreen />
-      {/* <Stack.Screen name='AdsBook' component={BottomTabScreen} options={{ headerShown: true }}/> */}
-      {/* <Stack.Screen name='Reels' component={Reels} options={{ headerShown: false }}/> */}
-      {/* </Stack.Navigator> */}
     </NavigationContainer>
   );
 }
-//  App;
-const styles = StyleSheet.create({
-  NavigationContainer: {
-    backgroundColor: "red"
-  },
-});
 
 
