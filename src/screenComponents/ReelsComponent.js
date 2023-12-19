@@ -31,8 +31,8 @@ const ReelsComponent = () => {
             renderItem={({ item, index }) => (
                 <ReelSingle item={item} index={index} currentIndex={currentIndex} play={playVideo} />
             )}
-            // keyExtractor={(item, index) => index.toString()}
-            keyExtractor={(item, index) => index}
+            keyExtractor={(item, index) => index.toString()}
+            // keyExtractor={(item, index) => index}
 
           loop={true}
         

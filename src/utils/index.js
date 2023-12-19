@@ -9,7 +9,10 @@ export  function getDeviceWidth(){
 
 
 export function formatNumber(num){
-
+  if (typeof num !== 'number') {
+    // Handle the case where num is not a number
+    return 'Invalid input';
+  }
   const strNum = num.toString();
   if (num >= 0 && num <= 999) {
     return strNum;

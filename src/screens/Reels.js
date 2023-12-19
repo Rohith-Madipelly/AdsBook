@@ -1,6 +1,6 @@
 import { Dimensions, Text,StyleSheet, View } from 'react-native'
 import React, { Component } from 'react'
-import Feather from "react-native-vector-icons/Feather"
+// import Feather from "react-native-vector-icons/Feather"
 import ReelsComponent from '../screenComponents/ReelsComponent'
 
 const Reels = () => {

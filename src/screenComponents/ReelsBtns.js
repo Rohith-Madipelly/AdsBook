@@ -19,30 +19,43 @@ import { formatNumber } from "../utils";
 
 
 const ReelsBtns = ({
+
   isLiked,
   likes,
   shares,
   comments,
-  thumbnailUrl,
+  UploaderthumbnailUrl,
+  index,
 }) => {
 
   const [liked, setLiked] = useState(isLiked);
 // setLiked(isLiked)
   return (
     <View style={styles.container}>
+
+
+      {
+        console.log(likes)
+      }
+      
     <TouchableOpacity
       style={styles.btn}
       onPress={() => setLiked((prevState) => !prevState)}
     >
-      {!liked ? (
+      {liked ? (
         <Entypo name="heart" size={25} color="red" />
       ) : (
         <Entypo name="heart-outlined" size={25} color="white" />
       )}
       <Text style={[styles.text, typographyStyles.md]}>
-        {liked ? formatNumber(likes + 1) : formatNumber(likes)} Likes
+
+        {/* {liked ? formatNumber(likes + 1) : formatNumber(likes)} */}
+        {likes}
+        {/* {liked ? formatNumber((likes ?? 0) + 1) : formatNumber(likes ?? 0)} */}
+
       </Text>
     </TouchableOpacity>
+
     <TouchableOpacity style={styles.btn}>
       <Feather name="message-circle" size={25} color="white" />
       <Text style={[styles.text, typographyStyles.md]}>
@@ -52,29 +65,39 @@ const ReelsBtns = ({
     <TouchableOpacity style={styles.btn}>
       <Ionicons name="paper-plane-outline" size={25} color={"white"} />
       <Text style={[styles.text, typographyStyles.md]}>
-        {/* {formatNumber(shares)} */} shares
+       {formatNumber(shares)} 
+       {/* shares of {index} */}
       </Text>
     </TouchableOpacity>
-    <TouchableOpacity style={styles.btn}>
+    {/* <TouchableOpacity style={styles.btn}>
       <MaterialCommunityIcons
         name="dots-horizontal"
         size={25}
         color="white"
       />
-    </TouchableOpacity>
-    {/* <TouchableOpacity style={styles.btn}>
-      <Image source={{ uri: thumbnailUrl }} style={styles.image} />
     </TouchableOpacity> */}
+    
+    <TouchableOpacity style={styles.btn}>
+      <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} />
+      
+    </TouchableOpacity>
   </View>
   );
 };
 
 const styles = StyleSheet.create({
+  // container: {
+  //   position: "absolute",
+  //   bottom: 25,
+  //   right: 7,
+  //   width: 65,
+  //   zIndex: 20,
+  // },
   container: {
     position: "absolute",
-    bottom: 70,
-    right: 10,
-    width: 55,
+    bottom: 30,
+    left: 7,
+    width: 65,
     zIndex: 20,
   },
   btn: {
@@ -86,7 +109,7 @@ const styles = StyleSheet.create({
     marginTop: 6,
     fontWeight: "500",
     textAlign: "center",
-    fontSize: 16,
+    fontSize: 14,
   },
   image: {
     width: 30,

@@ -7,6 +7,7 @@ import { ActivityIndicator } from 'react-native';
 // import { getDeviceHeight, getDeviceWidth } from "../utils";
 
 import ReelsBtns from "./ReelsBtns";
+import ReelDescription from './ReelDescription';
 
 
 
@@ -17,6 +18,8 @@ const ReelSingle = ({ item, index, currentIndex }) => {
   useEffect(() => {
 
     if (currentIndex === index) {
+    videoRef.current.replayAsync();
+
       PlayVideo()
     }
     // else if (currentIndex != index) {
@@ -25,6 +28,7 @@ const ReelSingle = ({ item, index, currentIndex }) => {
     else {
       PauseVideo()
     }
+
   }, [currentIndex])
 
 
@@ -86,9 +90,24 @@ const ReelSingle = ({ item, index, currentIndex }) => {
   // not a complete code look for full buffering data code
 
   const onPlaybackStatusUpdate = (status) => {
+    // videoRef.current.replayAsync();
+
+  // Check if the video has just started playing
+    if (status.didJustFinish) {
+      // Video finished playing, seek to the beginning
+      videoRef.current.replayAsync();
+      // console.log("Reel Single Page : 94 >> Video is replaying now again")
+      const Amount=item.Price
+      console.error("You Have Completed watching this reels.")
+      console.error(" Your have earned ",item.Price)
+      
+    }
+
     if (status.isLoaded && !status.isBuffering) {
       setIsBuffering(false);
     }
+
+    
   };
 
 
@@ -96,6 +115,7 @@ const ReelSingle = ({ item, index, currentIndex }) => {
     <View style={{ width: windoWidth, height: windowHeight, position: 'relative' }}>
 
       <>
+     
         <Video
           ref={videoRef}
           onBuffer={onBuffer}
@@ -120,7 +140,8 @@ const ReelSingle = ({ item, index, currentIndex }) => {
         />
 
         <View>
-          <Text>uasgdfuf</Text>
+          <ReelDescription description={item.description}/>
+          {/* <Text>uasgdfuf</Text> */}
           <ReelsBtns
 
             // isLiked={item.liked}
@@ -133,9 +154,11 @@ const ReelSingle = ({ item, index, currentIndex }) => {
           likes={item.likes}
           shares={item.shares}
           comments={item.comments}
-          thumbnailUrl="50"
+          UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
+          // index={currentIndex}
           />
         </View>
+      
       </>
 
       {isBuffering && (
@@ -152,6 +175,7 @@ const ReelSingle = ({ item, index, currentIndex }) => {
 
 
     </View>
+   
 
 
   )
