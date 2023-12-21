@@ -9,8 +9,9 @@ import {
   View,
   TouchableWithoutFeedback,
   Image,
+  ImageBackground,
 } from "react-native";
-
+import { useNavigation } from '@react-navigation/native';
 
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
@@ -26,13 +27,15 @@ import { ErrorMessage, Button } from "../screenComponents/Auth";
 const Login = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const navigation = useNavigation();
 
   function submitHandler(user) {
-    
+
     setLoading(true);
     try {
       const { email, password } = user;
-      console.log(email," > ",password)
+      console.log(email, " > ", password)
+      navigation.navigate('Reels');
       // const createdUser = await signInWithEmailAndPassword(
       //   auth,
       //   email,
@@ -48,7 +51,7 @@ const Login = () => {
       }
       setError(message);
     } finally {
-      // setLoading(false);
+      setLoading(false);
     }
 
   }
@@ -57,26 +60,41 @@ const Login = () => {
   return (
     <>
       {loading && <Loader />}
-      <KeyboardAvoidingView
-        behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={styles.container}
+      <ImageBackground
+        source={require('../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
+        style={styles.containerImageBackground}
       >
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={styles.container}
+        >
 
 
-        <StatusBar style="auto" />
-        <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
-          <View>
-            <Image
-              source={require("../../assets/logoImgs/LogoModel.png")}
-              style={styles.image}
-            />
-            <Image
-              source={require("../../assets/logoImgs/LogoName.png")}
-              style={styles.image}
-            />
+
+          {/* <StatusBar style="auto" /> */}
+          
+
+          <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
+            <View>
+              <Text style={styles.Heading_1}>Welcome Back</Text>
+
+              {/* Correct Way in React native */}
+              <Text style={[styles.Heading_2, { marginVertical: 10,marginBottom:25 }]}>
+                Login in Your Account
+              </Text>
 
 
-            <Text>Lo543gin</Text>
+
+            {/* <Image
+                source={require("../../assets/logoImgs/LogoModel.png")}
+                style={styles.image}
+              />
+              <Image
+                source={require("../../assets/logoImgs/LogoName.png")}
+                style={styles.image}
+              /> */}
+
+
             <Formik
               initialValues={{ email: "", password: "" }}
               onSubmit={submitHandler}
@@ -94,6 +112,8 @@ const Login = () => {
                 <>
                   {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
                   <View style={styles.inputContainer}>
+
+                   
                     <View
                       style={[
                         styles.input,
@@ -109,7 +129,7 @@ const Login = () => {
                         onChangeText={handleChange("email")}
                         onBlur={handleBlur("email")}
                         value={values.email}
-                        style={{ color: "white" }}
+                        style={{ color: "black" }}
                       />
                     </View>
                     {(errors.email && touched.email) && (
@@ -127,17 +147,31 @@ const Login = () => {
                       <TextInput
                         placeholderTextColor={"#444"}
                         placeholder="Password"
-                        autoCapitalize="none"
+                        // autoCapitalize="none"
                         secureTextEntry
                         onChangeText={handleChange("password")}
                         value={values.password}
-                        style={{ color: "white" }}
+                        style={{ color: "black" }}
                       />
                     </View>
                     {(touched.password && errors.password) && (
                       <ErrorMessage>{errors.password}</ErrorMessage>
                     )}
                   </View>
+
+                  <Button
+                    activeOpacity={0.5}
+                    //@ts-ignore
+                    onPress={handleSubmit}
+                    disabled={!isValid}
+                    btnStyle={{ marginTop: 25 }}
+                    // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
+                    bgColor={`${!isValid ? "rgba(242, 142, 128, 1)" : "rgba(242, 142, 128, 1)"}`}
+                  >
+                    Login
+                  </Button>
+
+
                   <View style={styles.forgotPasswordContainer}>
                     <Text
                       style={[
@@ -152,29 +186,31 @@ const Login = () => {
                       Forgot Password
                     </Text>
                   </View>
+
                   <Button
                     activeOpacity={0.5}
                     //@ts-ignore
-                    onPress={handleSubmit}
+                    // onPress={handleSubmit}
                     disabled={!isValid}
-                    btnStyle={{ marginBottom: 25 }}
-                    bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
+                    btnStyle={{ marginTop: 10 }}
+                    bgColor={`${!isValid ? "rgba(242, 142, 128, 1)" : "rgba(242, 142, 128, 1)"}`}
                   >
-                    Login
+                    Don’t have an account? Sign up
                   </Button>
                 </>
               )}
 
 
-              </Formik>
+            </Formik>
 
 
           </View>
         </TouchableWithoutFeedback>
         <View>
         </View>
-      </KeyboardAvoidingView>
 
+      </KeyboardAvoidingView>
+    </ImageBackground >
     </>
   )
 }
@@ -184,14 +220,44 @@ export default Login
 
 
 const styles = StyleSheet.create({
+  containerImageBackground: {
+    width: '100%',
+    height: '100%'
+  },
   container: {
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "white",
+    padding: "0",
+    margin: "0",
+    width: '100%',
+    height: '100%'
+    // backgroundColor: "white",
+
   },
+
+  Heading_1: {
+    color: '#0A0240',
+    // fontFamily: 'Jost',
+    fontSize: 32,
+    fontStyle: 'normal',
+    fontWeight: '400',
+  },
+
+  Heading_2: {
+    color: '#0A0240',
+    // fontFamily: 'Jost',
+    fontSize: 24,
+    fontStyle: 'normal',
+    fontWeight: '400',
+
+
+  },
+
+
   inputContainer: {
     marginBottom: 12,
+
   },
   input: {
     width: 300,
@@ -199,10 +265,13 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderStyle: "solid",
     padding: 12,
+    
     borderRadius: 6,
     marginBottom: 6,
     color: "white",
     height: 45,
+
+
   },
   image: {
     width: 300,

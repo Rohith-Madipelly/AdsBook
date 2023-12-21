@@ -1,17 +1,14 @@
-
-import Ionic from "react-native-vector-icons/Ionicons"
-
+import React from 'react';
+import Ionic from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-
-import { useFonts } from "expo-font";
-import { useEffect } from "react";
-
-
+import { useFonts } from 'expo-font';
+import { useEffect } from 'react';
+import * as SplashScreen from 'expo-splash-screen';
 
 
-// import * as SplashScreen from "expo-splash-screen";
-// SplashScreen.preventAutoHideAsync();
+
+SplashScreen.preventAutoHideAsync();
 
 import Home from './src/screens/Home';
 import Search from './src/screens/Search';
@@ -22,6 +19,10 @@ import Profile from './src/screens/Profile';
 export default function App() {  
   
   const [fontsLoaded] = useFonts({
+    "Jost-Italic-VariableFont": require("./assets/fonts/Jost-Italic-VariableFont_wght.ttf"),
+    "Jost-VariableFont": require("./assets/fonts/Jost-VariableFont_wght.ttf"),
+
+
     "Os_Condensed-medium": require("./assets/fonts/OpenSans_Condensed-Medium.ttf"),
     "Os_Condensed-regular": require("./assets/fonts/OpenSans_Condensed-Regular.ttf"),
     "Os_Condensed-semi_bold": require("./assets/fonts/OpenSans_Condensed-SemiBold.ttf"),
@@ -44,7 +45,10 @@ export default function App() {
   const Tab = createBottomTabNavigator();
 
   // Method for BottomTabScreen Better to create External one
-  const BottomTabScreen = () => {
+  const BottomTabScreen = ({ route }) => {
+
+    const isReelsPage = route;
+    console.log(isReelsPage)
     return (
 
       <Tab.Navigator
@@ -73,10 +77,13 @@ export default function App() {
            return <Ionic name={iconName} size={size} color={colour} />
           }
         })}>
+
+
         <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
         <Tab.Screen name="Search" component={Search} />
         <Tab.Screen name="Reels" component={Reels} options={{ headerShown: false }} />
         <Tab.Screen name="Profile" component={Profile} />
+        
       </Tab.Navigator>)
   }
 

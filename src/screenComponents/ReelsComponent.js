@@ -27,7 +27,8 @@ const ReelsComponent = () => {
             onChangeIndex={handleChangeIndexValue}
             // onMomentumScrollEnd={()=>{console.error("ipoyindhi ra waste fellow")}}
      
-            
+            // loadMinimal
+    //   loadMinimalSize={1}
             renderItem={({ item, index }) => (
                 <ReelSingle item={item} index={index} currentIndex={currentIndex} play={playVideo} />
             )}
@@ -41,6 +42,7 @@ const ReelsComponent = () => {
           decelerationRate={0.9}
         
         />
+
         // <view>
         //     <Text>Rohith</Text>
         // </view>

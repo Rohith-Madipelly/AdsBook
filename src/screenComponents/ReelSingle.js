@@ -1,25 +1,19 @@
 import { View, Text, Dimensions, Touchable, TouchableOpacity, } from 'react-native'
 import React, { useRef, useState, useEffect } from 'react'
-// import Video from "react-native-video"
 import { Video, ResizeMode } from 'expo-av';
 import { ActivityIndicator } from 'react-native';
-
-// import { getDeviceHeight, getDeviceWidth } from "../utils";
-
 import ReelsBtns from "./ReelsBtns";
 import ReelDescription from './ReelDescription';
 
 
+const ReelSingle = ({ item, index, currentIndex,play }) => {
 
-const ReelSingle = ({ item, index, currentIndex }) => {
   const [isBuffering, setIsBuffering] = useState(true);
-
 
   useEffect(() => {
 
     if (currentIndex === index) {
-    videoRef.current.replayAsync();
-
+      videoRef.current.replayAsync();
       PlayVideo()
     }
     // else if (currentIndex != index) {
@@ -28,10 +22,7 @@ const ReelSingle = ({ item, index, currentIndex }) => {
     else {
       PauseVideo()
     }
-
   }, [currentIndex])
-
-
 
   const PlayVideo = async () => {
     try {
@@ -59,19 +50,15 @@ const ReelSingle = ({ item, index, currentIndex }) => {
     } catch (error) { console.log("Error in PauseVideo", currentIndex) }
   };
 
-  // const handlePlaybackStatus=(playbackStatus)=>
-  // {
-  //   if (!playbackStatus.isLoaded || playbackStatus.isBuffering) {
-  //     setLoading(true);
-  //     return;
-  //   } else {
-  //     setLoading(false);
-  //   }
-  // }
+  const handlePlaybackStatus = (playbackStatus) => {
+    if (!playbackStatus.isLoaded || playbackStatus.isBuffering) {
+      setLoading(true);
+      return;
+    } else {
+      setLoading(false);
+    }
+  }
 
-
-  // const windoWidth = getDeviceHeight();
-  // const windowHeight =  getDeviceWidth();
   const windoWidth = Dimensions.get('window').width
   const windowHeight = Dimensions.get('window').height
 
@@ -79,7 +66,6 @@ const ReelSingle = ({ item, index, currentIndex }) => {
 
   const onBuffer = buffer => {
     setIsBuffering(buffer.isBuffering);
-    // console.log("buffring", buffer);
   }
   const onError = onError => {
     console.log("error i am buffering", onError);
@@ -90,93 +76,96 @@ const ReelSingle = ({ item, index, currentIndex }) => {
   // not a complete code look for full buffering data code
 
   const onPlaybackStatusUpdate = (status) => {
+    // console.error(status)
     // videoRef.current.replayAsync();
 
-  // Check if the video has just started playing
+    // Check if the video has just started playing
     if (status.didJustFinish) {
       // Video finished playing, seek to the beginning
       videoRef.current.replayAsync();
       // console.log("Reel Single Page : 94 >> Video is replaying now again")
-      const Amount=item.Price
+      const Amount = item.Price
       console.error("You Have Completed watching this reels.")
-      console.error(" Your have earned ",item.Price)
-      
+      console.error(" Your have earned ", item.Price)
+
     }
 
     if (status.isLoaded && !status.isBuffering) {
       setIsBuffering(false);
     }
-
     
+
+
   };
 
 
   return (
-    <View style={{ width: windoWidth, height: windowHeight, position: 'relative' }}>
+    <TouchableOpacity
 
-      <>
-     
-        <Video
-          ref={videoRef}
-          onBuffer={onBuffer}
-          onError={onError}
-          repeat={true}
-          resizeMode='cover'
-          // resizeMode="contain"
-          paused={false}
-          source={item.video}
-          // source={{
-          //   uri: 'https://d23dyxeqlo5psv.cloudfront.net/big_buck_bunny.mp4',
-          // }}
-          isLooping
-          seNativeControls={false}
-          style={{
-            width: '100%',
-            height: '100%',
-            position: 'absolute'
-          }}
-          onPlaybackStatusUpdate={(status) => onPlaybackStatusUpdate(status)}
+      activeOpacity={1}
+      onPressIn={PauseVideo}
+      onPressOut={PlayVideo} 
+    >
+      <View style={{ width: windoWidth, height: windowHeight, position: 'relative' }}>
 
-        />
+        <>
 
-        <View>
-          <ReelDescription description={item.description}/>
-          {/* <Text>uasgdfuf</Text> */}
-          <ReelsBtns
+          <Video
+            ref={videoRef}
+            onBuffer={onBuffer}
+            onError={onError}
+            repeat={true}
+            resizeMode='cover'
+            // resizeMode="contain"
+            paused={false}
+            source={{ uri: item.video }}
+            // source={item.video}
+            // source={{
+            //   uri: 'https://adsbook-videos.s3.eu-north-1.amazonaws.com/VID-20231220-WA0002.mp4',
+            // }}
+            isLooping
+            seNativeControls={false}
+            style={{
+              width: '100%',
+              height: '100%',
+              position: 'absolute'
+            }}
+            onPlaybackStatusUpdate={(status) => onPlaybackStatusUpdate(status)}
 
-            // isLiked={item.liked}
-            // likes="50"
-            // shares="50"
-            // comments="50"
-            // thumbnailUrl="50"
-
-          isLiked={item.liked}
-          likes={item.likes}
-          shares={item.shares}
-          comments={item.comments}
-          UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
-          // index={currentIndex}
           />
-        </View>
-      
-      </>
 
-      {isBuffering && (
-        <View
-          style={{
+          <View>
 
-            width: windoWidth, height: windowHeight, position: 'relative',
-            justifyContent: 'center',
-            alignItems: 'center',
-          }}>
-          <ActivityIndicator size="large" color="#0000ff" />
-        </View>
-      )}
+            <ReelDescription description={item.description} />
+            {/* <Text>uasgdfuf</Text> */}
+            <ReelsBtns
+              isLiked={item.liked}
+              likes={item.likes}
+              shares={item.shares}
+              comments={item.comments}
+            // UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
+            // index={currentIndex}
+            />
+          </View>
+
+        </>
+
+        {isBuffering && (
+          <View
+            style={{
+
+              width: windoWidth, height: windowHeight, position: 'relative',
+              justifyContent: 'center',
+              alignItems: 'center',
+            }}>
+            <ActivityIndicator size="large" color="#0000ff" />
+          </View>
+        )}
 
 
-    </View>
-   
+      </View>
 
+    </TouchableOpacity>
 
   )
 }

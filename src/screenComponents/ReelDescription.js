@@ -6,13 +6,16 @@ import {
     TouchableOpacity,
     Image,
     ImageSourcePropType,
+    Dimensions,
+    Linking
 } from "react-native";
 
 
 import { typographyStyles } from "../constants";
 import { formatNumber } from "../utils";
 
-
+const windoWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 const ReelDescription = ({
     description,
@@ -23,6 +26,7 @@ const ReelDescription = ({
     // UploaderthumbnailUrl,
 }) => {
 
+
     // const [liked, setLiked] = useState(isLiked);
 
     return (
@@ -31,8 +35,11 @@ const ReelDescription = ({
             <TouchableOpacity style={styles.btn2}>
                 {/* <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} /> */}
                 <View>
-                    <Text style={styles.text}> Rohith loves 
-                    {description}
+                    <Text style={styles.text} 
+                    onPress={() => Linking.openURL(description)}
+                    >
+                        {/* {description}  */}
+                        Click here for Location
                     </Text>
                 </View>
 
@@ -43,24 +50,19 @@ const ReelDescription = ({
 
 const styles = StyleSheet.create({
     container: {
-        position: "absolute",
-        bottom: 35,
-        left:55,
-        // right: 50,
-        maxWidth: 300,
-        width:290,
+        position: 'absolute',
 
-        // padding:3,
-        paddingTop:0,
-        paddingBottom:2,
-        paddingLeft:10,
+        bottom: -(windowHeight - 40),
+        // backgroundColor: 'red',
+        left: 65,
+        right:7,
+
 
         zIndex: 18,
-        // backgroundColor:"red",
-        borderRadius:100,
+        borderRadius: 100,
     },
     btn2: {
-        height:40
+        height: "auto"
         // alignItems: "center",
         // marginBottom: 15,
     },
@@ -68,10 +70,13 @@ const styles = StyleSheet.create({
         color: "#fff",
         marginTop: 6,
         fontWeight: "400",
-        fontSize:14,
-        
-        textAlign:"left",
-       
+        fontSize: 14,
+
+        textAlign: "left",
+        padding: 5,
+        paddingBottom: 5,
+        height: "auto"
+
     },
     image: {
         width: 30,

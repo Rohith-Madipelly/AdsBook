@@ -4,9 +4,10 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
+  Image, Dimensions,
   ImageSourcePropType,
 } from "react-native";
+import { FontAwesome } from '@expo/vector-icons';
 import {
   Entypo,
   Feather,
@@ -16,6 +17,8 @@ import {
 import { typographyStyles } from "../constants";
 import { formatNumber } from "../utils";
 
+const windoWidth = Dimensions.get('window').width
+const windowHeight = Dimensions.get('window').height
 
 
 const ReelsBtns = ({
@@ -29,7 +32,7 @@ const ReelsBtns = ({
 }) => {
 
   const [liked, setLiked] = useState(isLiked);
-// setLiked(isLiked)
+  // setLiked(isLiked)
   return (
     <View style={styles.container}>
 
@@ -37,51 +40,81 @@ const ReelsBtns = ({
       {
         console.log(likes)
       }
-      
-    <TouchableOpacity
-      style={styles.btn}
-      onPress={() => setLiked((prevState) => !prevState)}
-    >
-      {liked ? (
-        <Entypo name="heart" size={25} color="red" />
-      ) : (
-        <Entypo name="heart-outlined" size={25} color="white" />
-      )}
-      <Text style={[styles.text, typographyStyles.md]}>
 
-        {/* {liked ? formatNumber(likes + 1) : formatNumber(likes)} */}
-        {likes}
-        {/* {liked ? formatNumber((likes ?? 0) + 1) : formatNumber(likes ?? 0)} */}
+      <TouchableOpacity
+        style={styles.btn}
+        onPress={() => setLiked((prevState) => !prevState)}
+      >
+        {liked ? (
+          <Entypo name="heart" size={35} color="red" />
+        ) : (
+          <Entypo name="heart-outlined" size={35} color="white" />
+        )}
 
-      </Text>
-    </TouchableOpacity>
+        <Text style={[styles.text, typographyStyles.md]}>
 
-    <TouchableOpacity style={styles.btn}>
-      <Feather name="message-circle" size={25} color="white" />
-      <Text style={[styles.text, typographyStyles.md]}>
-         {formatNumber(comments)} Comments
-      </Text>
-    </TouchableOpacity>
-    <TouchableOpacity style={styles.btn}>
-      <Ionicons name="paper-plane-outline" size={25} color={"white"} />
-      <Text style={[styles.text, typographyStyles.md]}>
-       {formatNumber(shares)} 
-       {/* shares of {index} */}
-      </Text>
-    </TouchableOpacity>
-    {/* <TouchableOpacity style={styles.btn}>
+          {/* {liked ? formatNumber(likes + 1) : formatNumber(likes)} */}
+          {likes}
+          {/* {liked ? formatNumber((likes ?? 0) + 1) : formatNumber(likes ?? 0)} */}
+
+        </Text>
+      </TouchableOpacity>
+
+      <TouchableOpacity style={styles.btn}>
+        {/* <Feather name="message-circle" size={35} color="white" /> */}
+        {/* <Entypo name="thumbs-up" size={35} color="white" /> */}
+
+        {liked ? (
+          <FontAwesome name="thumbs-down" size={35} color="white" />
+        ) : (
+          <FontAwesome name="thumbs-down" size={35} color="lightblue" />
+        )}
+        <Text style={[styles.text, typographyStyles.md]}>
+          DisLike
+        </Text>
+      </TouchableOpacity>
+
+
+
+
+      <TouchableOpacity style={styles.btn}>
+        <Ionicons name="paper-plane-outline" size={35} color={"white"} style={styles.btnbtn} />
+        <Text style={[styles.text, typographyStyles.md]}>
+          {/* {formatNumber(shares)}  */}
+          Share
+          {/* shares of {index} */}
+        </Text>
+      </TouchableOpacity>
+
+
+      <TouchableOpacity style={styles.btn}
+        onPress={() => { console.error("Downloaded") }}
+
+      >
+
+        <FontAwesome name="download" size={35} color={"white"} style={styles.btnbtn} />
+        <Text style={[styles.text, typographyStyles.md]}>
+          {/* {formatNumber(shares)}  */}
+          Save
+          {/* shares of {index} */}
+        </Text>
+      </TouchableOpacity>
+
+
+
+      {/* <TouchableOpacity style={styles.btn}>
       <MaterialCommunityIcons
         name="dots-horizontal"
         size={25}
         color="white"
       />
     </TouchableOpacity> */}
-    
-    <TouchableOpacity style={styles.btn}>
-      <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} />
-      
-    </TouchableOpacity>
-  </View>
+
+      <TouchableOpacity style={styles.btn}>
+        {/* <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} /> */}
+
+      </TouchableOpacity>
+    </View>
   );
 };
 
@@ -94,8 +127,12 @@ const styles = StyleSheet.create({
   //   zIndex: 20,
   // },
   container: {
-    position: "absolute",
-    bottom: 30,
+    position: 'absolute',
+    // bottom: -330,
+    bottom: -(windowHeight - 15),
+    // top:(windowHeight-(windowHeight/3.10)),
+
+
     left: 7,
     width: 65,
     zIndex: 20,
@@ -103,6 +140,10 @@ const styles = StyleSheet.create({
   btn: {
     alignItems: "center",
     marginBottom: 10,
+  },
+  ReelsBtn: {
+    size: 10,
+    color: 'white',
   },
   text: {
     color: "#fff",
