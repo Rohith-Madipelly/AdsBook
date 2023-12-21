@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Ionic from 'react-native-vector-icons/Ionicons';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
@@ -6,7 +6,7 @@ import { useFonts } from 'expo-font';
 import { useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
 
-
+import { useNavigation } from '@react-navigation/native';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -17,7 +17,16 @@ import Profile from './src/screens/Profile';
 
 
 export default function App() {  
+
+
+
+
+  // const navigation = useNavigation();
   
+  // Check if the current route is the "Reels" screen
+  // const isOnReelsPage = navigation.getCurrentRoute().name === 'Reels';
+
+
   const [fontsLoaded] = useFonts({
     "Jost-Italic-VariableFont": require("./assets/fonts/Jost-Italic-VariableFont_wght.ttf"),
     "Jost-VariableFont": require("./assets/fonts/Jost-VariableFont_wght.ttf"),
@@ -47,8 +56,12 @@ export default function App() {
   // Method for BottomTabScreen Better to create External one
   const BottomTabScreen = ({ route }) => {
 
-    const isReelsPage = route;
-    console.log(isReelsPage)
+    // const navigation = useNavigation();
+    // const isOnReelsPage = navigation;
+
+    // console.log(isOnReelsPage)
+
+
     return (
 
       <Tab.Navigator
@@ -63,16 +76,24 @@ export default function App() {
               iconName = focused ? "home-sharp" : "home-outline";
               size = focused ? size + 8 : size + 2;
             } else if (route.name === "Search") {
-              iconName = focused ? "search" : "ios-search-outline"
+              iconName = focused ? "search" : "ios-search-outline";
+              size = focused ? size + 8 : size + 2;
+
             }
             else if (route.name === "Reels") {
-              iconName = focused ? "caret-forward-circle" : "caret-forward-circle-outline"
+              iconName = focused ? "caret-forward-circle" : "caret-forward-circle-outline";
+              size = focused ? size + 8 : size + 2;
+
             }
             else if (route.name === "Activity") {
-              iconName = focused ? "ios-heart" : "ios-heart-outline"
+              iconName = focused ? "ios-heart" : "ios-heart-outline";
+              size = focused ? size + 8 : size + 2;
+
             }
             else if (route.name === "Profile") {
-              iconName = focused ? "ios-person-circle" : "ios-person-outline"
+              iconName = focused ? "ios-person-circle" : "ios-person-outline";
+              size = focused ? size + 8 : size + 2;
+
             }
            return <Ionic name={iconName} size={size} color={colour} />
           }

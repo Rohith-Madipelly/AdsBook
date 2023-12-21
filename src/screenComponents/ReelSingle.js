@@ -6,23 +6,37 @@ import ReelsBtns from "./ReelsBtns";
 import ReelDescription from './ReelDescription';
 
 
-const ReelSingle = ({ item, index, currentIndex,play }) => {
-
+const ReelSingle = ({ item, index, currentIndex, play }) => {
+  
   const [isBuffering, setIsBuffering] = useState(true);
 
   useEffect(() => {
+   
+      if (currentIndex === index) {
+        videoRef.current.replayAsync();
+        PlayVideo()
+      }
+      // else if (currentIndex != index) {
+      //   PauseVideo()
+      // }
 
-    if (currentIndex === index) {
-      videoRef.current.replayAsync();
-      PlayVideo()
+      else {
+        PauseVideo()
+      }
+    
+
+  }, [currentIndex])
+
+
+  useEffect(()=>{
+    if(play){
+
     }
-    // else if (currentIndex != index) {
-    //   PauseVideo()
-    // }
-    else {
+    else{
       PauseVideo()
     }
-  }, [currentIndex])
+
+  },[play])
 
   const PlayVideo = async () => {
     try {
@@ -93,7 +107,7 @@ const ReelSingle = ({ item, index, currentIndex,play }) => {
     if (status.isLoaded && !status.isBuffering) {
       setIsBuffering(false);
     }
-    
+
 
 
   };
@@ -104,7 +118,7 @@ const ReelSingle = ({ item, index, currentIndex,play }) => {
 
       activeOpacity={1}
       onPressIn={PauseVideo}
-      onPressOut={PlayVideo} 
+      onPressOut={PlayVideo}
     >
       <View style={{ width: windoWidth, height: windowHeight, position: 'relative' }}>
 

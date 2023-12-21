@@ -3,12 +3,30 @@ import React, { Component } from 'react'
 // import Feather from "react-native-vector-icons/Feather"
 import ReelsComponent from '../screenComponents/ReelsComponent'
 
+import { useFocusEffect } from '@react-navigation/native';
+
+
 const Reels = () => {
     const windoWidth = Dimensions.get('window').width
     const windowHeight = Dimensions.get('window').height
 
 
-    
+    const [SetReelPageActive, setSetReelPageActive] = React.useState(true);
+
+    // Use useFocusEffect to set SetReelPageActive when the screen is focused
+    useFocusEffect(
+      React.useCallback(() => {
+        setSetReelPageActive(true);
+  
+        // Cleanup function when the component loses focus
+        return () => {
+          setSetReelPageActive(false);
+          // Any cleanup logic if needed
+        };
+      }, [])
+    );
+
+    console.log("smhvdajs",SetReelPageActive)
     return (
         <View style={{
             marginTop:0,
@@ -39,7 +57,7 @@ const Reels = () => {
                 }} /> */}
             </View>
 
-            <ReelsComponent />
+            <ReelsComponent isReelPage={SetReelPageActive}/>
 
             {/* <Text>vsd</Text> */}
         </View>

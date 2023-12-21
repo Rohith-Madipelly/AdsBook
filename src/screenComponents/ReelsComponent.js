@@ -6,7 +6,7 @@ import { videoData } from './Database'
 
 import ReelSingle from './ReelSingle'
 
-const ReelsComponent = () => {
+const ReelsComponent = ({isReelPage}) => {
 
 
 
@@ -19,7 +19,6 @@ const ReelsComponent = () => {
         // console.log("Index of play ", index)
     }
 
-
     return (
         <SwiperFlatList
             vertical={true}
@@ -30,7 +29,7 @@ const ReelsComponent = () => {
             // loadMinimal
     //   loadMinimalSize={1}
             renderItem={({ item, index }) => (
-                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={playVideo} />
+                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} />
             )}
             keyExtractor={(item, index) => index.toString()}
             // keyExtractor={(item, index) => index}
