@@ -14,7 +14,7 @@ export default function Search() {
           }}>
           <ActivityIndicator size="large" color="#999999" />
 
-          <Text style={{fontFamily:"Jost-VariableFont",fontWeight:900,fontSize:62}}>jkfsdbjkfv</Text>
+          <Text style={{fontFamily:"Jost-VariableFont",fontWeight:900,fontSize:62}}> </Text>
         </View>
     </View>
   )
