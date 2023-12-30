@@ -7,7 +7,8 @@ const theme ={
         secondaryBlue:"#1B4B77",
         primaryPink:"#DA0051",
         primaryViolet:"#6800AB",
-        primaryBrown:"#9C652C"
+        primaryBrown:"#9C652C",
+        primaryRed:"#c70404"
     }
 }
 export default theme;

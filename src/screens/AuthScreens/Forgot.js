@@ -1,5 +1,3 @@
-
-import React, { useState } from "react";
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -13,70 +11,49 @@ import {
   Image,
   ImageBackground,
 } from "react-native";
+import { useNavigation } from '@react-navigation/native';
+
+import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
-
-
 import { Formik } from "formik";
 import { loginSchema } from "../../schema/signIn";
 
 import { theme, typographyStyles } from "../../constants";
+
+// import Loader from "../../screenComponents/Shared/Loader/Loader";
+import Loader from "../../screenComponents/Shared/Loader/Loader";
+// import { ErrorMessage, Button } from "../screenComponents/Auth";
 import { ErrorMessage, Button } from "../../screenComponents/Auth";
-import { ToasterSender } from '../../utils/Toaster'
 
-import { UserLoginApi } from "../../utils/API_Calls";
-import Spinner from 'react-native-loading-spinner-overlay';
-import { useNavigation } from '@react-navigation/native';
-
-// redux
-import {useDispatch} from 'react-redux';
-import { setToken } from '../../redux/actions/loginAction'
-
-
-import ASO from '../../utils/AsyncStorage_Calls'
+import { UserLoginApi } from "../../utils/Apis";
 
 const Login = () => {
-  const [spinnerBool, setSpinnerbool] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
-
   const navigation = useNavigation();
-
-  const dispatch = useDispatch();
 
   const submitHandler = async (user) => {
 
     setLoading(true);
-
     try {
       const { email, password } = user;
-      setSpinnerbool(true)
+      // navigation.navigate('Reels');
+      
+
       const res = await UserLoginApi(email, password)
       if (res) {
-        const Message = res.data.message
-        const token = res.data.token
+        setLoading(false);
 
-        ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
-          if (status) {
-            // console.warn(status, " status>>>>>.")
-            ToasterSender({ Message: `${Message}` })
-            dispatch(setToken(token));
-          }
-        })
-
+        console.log(res.data.Token)
         setTimeout(() => {
-          setLoading(false);
-          setSpinnerbool(false)
-        }, 50);
-
-
+        setLoading(false);
+          navigation.navigate('Reels');
+        }, 1000);
       }
+      // console.log(email, " > ", password)
+
 
     } catch (err) {
-
-      ToasterSender({ Message: 'Invalid Credentials>' })
-      ToasterSender({ Message: err })
-
-      setSpinnerbool(false)
 
       let message = "Failed to create user.";
 
@@ -86,8 +63,6 @@ const Login = () => {
       // setError(message);
     } finally {
       setLoading(false);
-      setSpinnerbool(false)
-
     }
 
   }
@@ -95,15 +70,7 @@ const Login = () => {
 
   return (
     <>
-      {/* {loading && <Loader />} */}
-
-      <Spinner
-        visible={spinnerBool}
-        color={"#5F2404"}
-        animation={'fade'}
-      />
-
-
+      {loading && <Loader />}
       <ImageBackground
         source={require('../../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
         style={styles.containerImageBackground}
@@ -130,8 +97,18 @@ const Login = () => {
 
 
 
+              {/* <Image
+                source={require("../../assets/logoImgs/LogoModel.png")}
+                style={styles.image}
+              />
+              <Image
+                source={require("../../assets/logoImgs/LogoName.png")}
+                style={styles.image}
+              /> */}
+
+
               <Formik
-                initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                initialValues={{ email: "", password: "" }}
                 onSubmit={submitHandler}
                 validationSchema={loginSchema}
               >
@@ -155,8 +132,6 @@ const Login = () => {
                           { borderColor: `${(errors.email && touched.email) ? "red" : "#ccc"}` },
                         ]}
                       >
-
-
                         <TextInput
                           placeholderTextColor={"#444"}
                           placeholder="Email Address"
@@ -189,7 +164,7 @@ const Login = () => {
                           onChangeText={handleChange("password")}
                           value={values.password}
                           style={{ color: "black" }}
-
+                          
                         />
                       </View>
                       {(touched.password && errors.password) && (
@@ -219,8 +194,7 @@ const Login = () => {
                             fontSize: 14,
                           },
                           typographyStyles.md,
-                        ]}
-                        onPress={() => navigation.navigate("ForgotPassword")}
+                        ]}onPress={() => navigation.navigate("ForgotPassword")}
                       >
                         Forgot Password
                       </Text>

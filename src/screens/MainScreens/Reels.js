@@ -1,9 +1,11 @@
 import { Dimensions, Text,StyleSheet, View } from 'react-native'
 import React, { Component } from 'react'
 // import Feather from "react-native-vector-icons/Feather"
-import ReelsComponent from '../screenComponents/ReelsComponent'
+import ReelsComponent from '../../screenComponents/ReelsComponent'
 
 import { useFocusEffect } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { StatusBar } from 'expo-status-bar';
 
 
 const Reels = () => {
@@ -28,12 +30,14 @@ const Reels = () => {
 
     console.log("smhvdajs",SetReelPageActive)
     return (
+  
         <View style={{
             marginTop:0,
             width: windoWidth,
             height: windowHeight,
             // backgroundColor: 'black'
         }}>
+      <StatusBar style="auto" />
 
             {/* Reels Header */}
             
@@ -61,6 +65,7 @@ const Reels = () => {
 
             {/* <Text>vsd</Text> */}
         </View>
+       
     )
 }
 

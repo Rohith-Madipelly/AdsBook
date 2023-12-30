@@ -49,9 +49,35 @@ export const videoData=[
 
 
     },
+    {
+        video:'https://ads-book-s3.s3.ap-south-1.amazonaws.com/NTNfMTcwMzY2NDQ3MDIwMl81OQ%3D%3D.mp4',
+        // video: '../Storage/videos/Reels2.mp4',
+        title:'Reel 5',
+        description: 'https://maps.app.goo.gl/wa3yKaTYjuapKMjK6',
+        likes:'245',
+        liked:true,
+        shares:450,
+        comments:70,
+        Price:24
+
+
+    },
+    {
+        video:'https://ads-book-s3.s3.ap-south-1.amazonaws.com/NTMyXzE3MDM2NjQ0NTE3NjZfMzgy.mp4',
+        // video: '../Storage/videos/Reels2.mp4',
+        title:'Reel 6',
+        description: 'https://maps.app.goo.gl/wa3yKaTYjuapKMjK6',
+        likes:'245',
+        liked:true,
+        shares:450,
+        comments:70,
+        Price:24
+
+
+    },
 
     
-
+   
 ]
 
 
