@@ -53,7 +53,10 @@ const BottomTabScreen = ({ route }) => {
       <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Tab.Screen name="Reels" component={Reels} options={{ headerShown: false }} />
 
-      <Tab.Screen name="Wallet" component={Wallet} />
+      <Tab.Screen name="Wallet" component={Wallet} options={{
+          headerShown: true, // Show the header
+          headerBackVisible: true, // Hide the back button
+        }} />
 
       <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>

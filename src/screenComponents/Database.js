@@ -1,6 +1,6 @@
 export const videoData=[
     {
-        video: 'https://adsbook-videos.s3.eu-north-1.amazonaws.com/VID-20231220-WA0002.mp4',
+        video: 'https://adsbook-videos.s3.eu-north-1.amazonaws.com/NTNfMTcwMzY2NDQ3MDIwMl81OQ==.mp4',
         title:'Reel 1',
         description: 'https://maps.app.goo.gl/vRv3777FYV6o1QaX6',
         likes:'532',
@@ -21,7 +21,7 @@ export const videoData=[
         comments:70,
         Price:22
 
-
+        // NTNfMTcwMzY2NDQ3MDIwMl81OQ==.mp4
     },
     {
         video: 'https://adsbook-videos.s3.eu-north-1.amazonaws.com/VID-20231220-WA0004.mp4',

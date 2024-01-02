@@ -16,7 +16,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
-import { loginSchema } from "../../schema/signIn";
+import { ForgotSchema } from "../../schema/ForgotSchema";
 
 import { theme, typographyStyles } from "../../constants";
 
@@ -27,30 +27,31 @@ import { ErrorMessage, Button } from "../../screenComponents/Auth";
 
 import { UserLoginApi } from "../../utils/Apis";
 
-const Login = () => {
+const Forgot = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
   const navigation = useNavigation();
 
   const submitHandler = async (user) => {
+    console.log("data >",user)
 
     setLoading(true);
     try {
-      const { email, password } = user;
+      const { email} = user;
       // navigation.navigate('Reels');
       
 
-      const res = await UserLoginApi(email, password)
-      if (res) {
-        setLoading(false);
+      // const res = await UserLoginApi(email, password)
+      // if (res) {
+      //   setLoading(false);
 
-        console.log(res.data.Token)
-        setTimeout(() => {
-        setLoading(false);
-          navigation.navigate('Reels');
-        }, 1000);
-      }
-      // console.log(email, " > ", password)
+      //   console.log(res.data.Token)
+      //   setTimeout(() => {
+      //   setLoading(false);
+      //     navigation.navigate('Reels');
+      //   }, 1000);
+      // }
+      console.log(email, " > ")
 
 
     } catch (err) {
@@ -88,11 +89,11 @@ const Login = () => {
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
-              <Text style={styles.Heading_1}>Welcome Back</Text>
+              <Text style={styles.Heading_1}>Lost Password?</Text>
 
               {/* Correct Way in React native */}
               <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
-                Login in Your Account
+              Don’t worry we are here
               </Text>
 
 
@@ -108,9 +109,9 @@ const Login = () => {
 
 
               <Formik
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ email: "" }}
                 onSubmit={submitHandler}
-                validationSchema={loginSchema}
+                validationSchema={ForgotSchema}
               >
                 {({
                   handleChange,
@@ -149,28 +150,7 @@ const Login = () => {
                       )}
                     </View>
 
-                    <View>
-                      <View
-                        style={[
-                          styles.input,
-                          { borderColor: `${(touched.password && errors.password) ? "red" : "#ccc"}` },
-                        ]}
-                      >
-                        <TextInput
-                          placeholderTextColor={"#444"}
-                          placeholder="Password"
-                          // autoCapitalize="none"
-                          // secureTextEntry
-                          onChangeText={handleChange("password")}
-                          value={values.password}
-                          style={{ color: "black" }}
-                          
-                        />
-                      </View>
-                      {(touched.password && errors.password) && (
-                        <ErrorMessage>{errors.password}</ErrorMessage>
-                      )}
-                    </View>
+
 
                     <Button
                       activeOpacity={0.5}
@@ -181,34 +161,10 @@ const Login = () => {
                       // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
                       bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
                     >
-                      Login
+                      Reset Your Password
                     </Button>
 
 
-                    <View style={styles.forgotPasswordContainer}>
-                      <Text
-                        style={[
-                          {
-                            color: theme.colors.primaryBlue,
-                            fontWeight: "500",
-                            fontSize: 14,
-                          },
-                          typographyStyles.md,
-                        ]}onPress={() => navigation.navigate("ForgotPassword")}
-                      >
-                        Forgot Password
-                      </Text>
-                    </View>
-
-                    <Button
-                      activeOpacity={0.5}
-                      onPress={() => navigation.navigate("Register")}
-                      btnStyle={{ marginTop: 10 }}
-                      // bgColor={`${!isValid ? "rgba(242, 142, 128, 0.7)" : "rgba(242, 142, 128, 1)"}`}
-                      bgColor={"rgba(250, 142, 128, 1)"}
-                    >
-                      Don’t have an account? Sign up
-                    </Button>
                   </>
                 )}
 
@@ -227,7 +183,7 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Forgot
 
 
 

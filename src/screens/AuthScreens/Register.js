@@ -209,23 +209,23 @@ const Login = () => {
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(errors.email && touched.email) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.gender && touched.gender) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="User Name"
-                                                    autoComplete="name"
+                                                    placeholder="Gender"
+                                                    autoComplete="Gender"
                                                     keyboardType="email-address"
                                                     autoCapitalize="none"
-                                                    onChangeText={handleChange("email")}
-                                                    onBlur={handleBlur("email")}
-                                                    value={values.email}
+                                                    onChangeText={handleChange("gender")}
+                                                    onBlur={handleBlur("gender")}
+                                                    value={values.gender}
                                                     style={{ color: "black" }}
                                                 />
                                             </View>
-                                            {(errors.email && touched.email) && (
-                                                <ErrorMessage>{errors.email}</ErrorMessage>
+                                            {(errors.gender && touched.gender) && (
+                                                <ErrorMessage>{errors.gender}</ErrorMessage>
                                             )}
                                         </View>
 
@@ -241,7 +241,7 @@ const Login = () => {
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="User Name"
+                                                    placeholder="User Email"
                                                     autoComplete="name"
                                                     keyboardType="email-address"
                                                     autoCapitalize="none"
@@ -271,23 +271,23 @@ const Login = () => {
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(errors.email && touched.email) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.phone_number && touched.phone_number) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="Email Address"
+                                                    placeholder="Phone Number"
                                                     autoComplete="email"
                                                     keyboardType="email-address"
                                                     autoCapitalize="none"
-                                                    onChangeText={handleChange("email")}
-                                                    onBlur={handleBlur("email")}
-                                                    value={values.email}
+                                                    onChangeText={handleChange("phone_number")}
+                                                    onBlur={handleBlur("phone_number")}
+                                                    value={values.phone_number}
                                                     style={{ color: "black" }}
                                                 />
                                             </View>
-                                            {(errors.email && touched.email) && (
-                                                <ErrorMessage>{errors.email}</ErrorMessage>
+                                            {(errors.phone_number && touched.phone_number) && (
+                                                <ErrorMessage>{errors.phone_number}</ErrorMessage>
                                             )}
                                         </View>
 
@@ -295,22 +295,22 @@ const Login = () => {
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(touched.password && errors.password) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(touched.dob && errors.dob) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="Password"
+                                                    placeholder="Date Of Brith"
                                                     // autoCapitalize="none"
                                                     // secureTextEntry
                                                     onChangeText={handleChange("password")}
-                                                    value={values.password}
+                                                    value={values.dob}
                                                     style={{ color: "black" }}
 
                                                 />
                                             </View>
-                                            {(touched.password && errors.password) && (
-                                                <ErrorMessage>{errors.password}</ErrorMessage>
+                                            {(touched.dob && errors.dob) && (
+                                                <ErrorMessage>{errors.dob}</ErrorMessage>
                                             )}
                                         </View>
 

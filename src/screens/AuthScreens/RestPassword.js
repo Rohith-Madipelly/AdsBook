@@ -88,12 +88,12 @@ import {
   
             <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
               <View>
-                <Text style={styles.Heading_1}>Welcome Back</Text>
+                <Text style={styles.Heading_1}>Reset Your Password</Text>
   
                 {/* Correct Way in React native */}
-                <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
+                {/* <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
                   Login in Your Account
-                </Text>
+                </Text> */}
   
   
   

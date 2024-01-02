@@ -13,6 +13,14 @@ import ASO from "../utils/AsyncStorage_Calls";
 
 import { useSelector,useDispatch } from "react-redux";
 import { setToken } from '../../src/redux/actions/loginAction'
+import Profile from "./MainScreens/Profiles/Profile";
+import Password from "./MainScreens/Profiles/Password";
+import Notifications from "./MainScreens/Profiles/Notifications";
+import About from "./MainScreens/Profiles/About";
+import RateReview from "./MainScreens/Profiles/Rate&Review";
+import PrivacyPolicy from "./MainScreens/Profiles/PrivacyPolicy";
+import ShareApp from "./MainScreens/Profiles/ShareApp";
+import Help from "./MainScreens/Profiles/Help";
 
 
 export default function Screens() {
@@ -32,6 +40,7 @@ export default function Screens() {
           // console.log('Retrieved token:', token);
           if(token!=null){
             dispatch(setToken(token));
+            console.log(token)
           }
         }
       });
@@ -63,6 +72,16 @@ useEffect(() => {
 
       <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
 
+      <Stack.Screen name="ProfileProfile" component={Profile} />
+      <Stack.Screen name="ProfilePassword" component={Password} />
+      <Stack.Screen name="ProfileNotifications" component={Notifications} />
+      <Stack.Screen name="ProfileAbout" component={About} />
+      <Stack.Screen name="ProfileRateAndReview" component={RateReview} />
+      <Stack.Screen name="ProfilePrivacyPolicy" component={PrivacyPolicy} />
+      <Stack.Screen name="ProfileShareApp" component={ShareApp} />
+      <Stack.Screen name="ProfileHelp" component={Help} />
+
+    
       </Stack.Group>
       ):(
       <Stack.Group>
@@ -71,6 +90,10 @@ useEffect(() => {
       <Stack.Screen name="Register" component={Register} /> 
       <Stack.Screen name="ForgotPassword" component={Forgot} /> 
       <Stack.Screen name="RestPassword" component={RestPassword} /> 
+
+
+
+
       </Stack.Group>
       )
       }
