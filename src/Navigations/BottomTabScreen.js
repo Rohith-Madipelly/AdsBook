@@ -49,11 +49,13 @@ const BottomTabScreen = ({ route }) => {
        return <Ionic name={iconName} size={size} color={colour} />
       }
     })}>
+
       <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
       <Tab.Screen name="Reels" component={Reels} options={{ headerShown: false }} />
+
       <Tab.Screen name="Wallet" component={Wallet} />
 
-      <Tab.Screen name="Profile" component={Profile} />
+      <Tab.Screen name="Profile" component={Profile} options={{ headerShown: false }}/>
     </Tab.Navigator>
 
 

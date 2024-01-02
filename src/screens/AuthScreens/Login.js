@@ -81,7 +81,7 @@ const Login = () => {
       let message = "Failed to create user.";
 
       if (err) {
-        // message = err.message;
+        message = err.message;
       }
       // setError(message);
     } finally {
@@ -131,7 +131,8 @@ const Login = () => {
 
 
               <Formik
-                initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                initialValues={{ email: "", password: "" }}
                 onSubmit={submitHandler}
                 validationSchema={loginSchema}
               >
