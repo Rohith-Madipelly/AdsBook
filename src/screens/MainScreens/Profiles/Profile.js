@@ -6,29 +6,38 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 const Profile = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
+  const [profile,setProfile]=useState("")
   const [UserName, setUserName] = useState("")
   const [UserEmail, setUserEmail] = useState("")
   const [UserPhone, setUserPhone] = useState("")
   const [UserDOB, setDOB] = useState("")
+  const [age, setAge] = useState("")
+  const [gender, setGender] = useState("")
   const [Wallet, setWallet] = useState("")
 
 
   const loginSelectorToken = useSelector((state) => state.token);
+
   var tokenn = loginSelectorToken;
   tokenn = tokenn.replaceAll('"', '');
 
   const userData = async () => {
     setSpinnerbool(true)
+    // console.log(tokenn)
     try {
       const res = await UserGetProfileDetails(tokenn)
 
 
       if (res) {
-        console.log(">>>", res.data)
+        // console.log(">>>", res.data)
+
+        setUserName([res.data.firstname," ",res.data.lastname])
         setUserEmail(res.data.email)
         setUserPhone(res.data.phone_number)
         setDOB(res.data.Date_of_birth)
         setWallet(res.data.wallet)
+        setAge(res.data.age)
+        setGender(res.data.gender)
         setSpinnerbool(false)
       }
       else {
@@ -46,10 +55,7 @@ const Profile = () => {
   }
   //Profile API
   useEffect(() => {
-
-
     userData()
-
   }, []);
 
 
@@ -67,10 +73,12 @@ const Profile = () => {
       {/* <Text>Token: {loginSelectorToken}</Text> */}
 
 
-      <Text style={styles.TextUR}><Text style={styles.TextGS}>Name </Text> : Rohith 12Madipelly</Text>
+      <Text style={styles.TextUR}><Text style={styles.TextGS}>Name </Text> : {UserName}</Text>
       <Text style={styles.TextUR}><Text style={styles.TextGS}>Email </Text> : {UserEmail}</Text>
       <Text style={styles.TextUR}><Text style={styles.TextGS}>Phone Number </Text> : {UserPhone}</Text>
       <Text style={styles.TextUR}><Text style={styles.TextGS}>Date of Birth </Text> : {UserDOB}</Text>
+      <Text style={styles.TextUR}><Text style={styles.TextGS}>Age </Text> : {age}</Text>
+      <Text style={styles.TextUR}><Text style={styles.TextGS}>Gender </Text> : {gender}</Text>
       <Text style={styles.TextUR}><Text style={styles.TextGS}>Wallet </Text> : {Wallet}</Text>
 
 

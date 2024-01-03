@@ -131,9 +131,9 @@ const Login = () => {
 
 
               <Formik
-                // initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
+                initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
                 // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
-                initialValues={{ email: "", password: "" }}
+                // initialValues={{ email: "", password: "" }}
                 onSubmit={submitHandler}
                 validationSchema={loginSchema}
               >

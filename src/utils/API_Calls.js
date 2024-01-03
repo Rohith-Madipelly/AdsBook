@@ -10,8 +10,12 @@ export const UserLoginApi = async (email, password) => {
       email: email,
       password: password
     };
+  
     return await axios.post(`${GUEST_URL}/login`, loginData);
   };
+
+
+
 
 
 
@@ -29,13 +33,19 @@ export const UserLoginApi = async (email, password) => {
 
 
 
+
+
+
+
   //Profile api 
 export const UserGetProfileDetails = async (token) => {
   const ProfileData={
   }
-  return await axios.get("http://51.20.138.48:8001/user/profile" ,{
-    headers: { 
-      'Authorization': token
+  return await axios.get(`http://16.170.162.36:8001/user/profile` ,{
+    headers:  { 
+      'Authorization':`Bearer ${token}`
+      // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OGU3OTI3ODUwN2NjNDVhMWE3ZjVlZSIsImlhdCI6MTcwNDI2MzI5MCwiZXhwIjoxNzA0NDM2MDkwfQ.rCj1rD-BkqBINXpG1bVFR-D2Wcjkt2H2ITb-c59TKwc'
     }
+    
   });
 };
