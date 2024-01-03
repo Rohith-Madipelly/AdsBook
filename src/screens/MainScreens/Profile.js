@@ -13,14 +13,16 @@ const Profile = () => {
   const [UserName, setUserName] = useState("")
   const [StartingLetter, setStartingLetter] = useState("")
   const dispatch = useDispatch();
-  const loginSelectorToken = useSelector((state) => state.token);
+  let tokenn =  useSelector((state) => state.token);
 
-  var tokenn = loginSelectorToken;
-  // try{
-  //   tokenn = tokenn.replaceAll('"', '');
-
-  // }
-  // setSpinnerbool(true)
+  try {
+    if (tokenn != null) {
+      tokenn = tokenn.replaceAll('"', '');
+    }
+  }
+  catch (err) {
+    console.log("Error in token quotes",err)
+  }
 
   useEffect(() => {
     ProfileNameKosam()

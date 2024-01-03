@@ -33,8 +33,10 @@ const ReelDescription = ({
         <View style={styles.container}>
 
             <TouchableOpacity style={styles.btn2}>
+                
                 {/* <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} /> */}
                 <View>
+                <Text style={styles.textUpper} >Description {description}</Text>
                     <Text style={styles.text} 
                     onPress={() => Linking.openURL(description)}
                     >
@@ -65,6 +67,18 @@ const styles = StyleSheet.create({
         height: "auto"
         // alignItems: "center",
         // marginBottom: 15,
+    },
+    textUpper: {
+        color: "#fff",
+        marginTop: 6,
+        fontWeight: "400",
+        fontSize: 14,
+
+        textAlign: "left",
+        padding: 5,
+        paddingBottom: 0,
+        height: "auto"
+
     },
     text: {
         color: "#fff",

@@ -9,7 +9,7 @@ import ReelDescription from './ReelDescription';
 const ReelSingle = ({ item, index, currentIndex, play }) => {
   
   const [isBuffering, setIsBuffering] = useState(true);
-
+  const AWSBaseUrl="https://ads-book-s3.s3.ap-south-1.amazonaws.com"
   useEffect(() => {
    
       if (currentIndex === index) {
@@ -132,10 +132,10 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
             resizeMode='cover'
             // resizeMode="contain"
             paused={false}
-            source={{ uri: item.video }}
+            source={{ uri: `${AWSBaseUrl}/${item.videoUrl}` }}
             // source={item.video}
             // source={{
-            //   uri: 'https://adsbook-videos.s3.eu-north-1.amazonaws.com/VID-20231220-WA0002.mp4',
+            //   uri: 'https://ads-book-s3.s3.ap-south-1.amazonaws.com/NTNfMTcwMzY2NDQ3MDIwMl81OQ==.mp4',
             // }}
             isLooping
             seNativeControls={false}
@@ -150,7 +150,8 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
 
           <View>
 
-            <ReelDescription description={item.description} />
+            {/* <ReelDescription description={item.description} /> */}
+            <ReelDescription description={"Rohith"} />
             {/* <Text>uasgdfuf</Text> */}
             <ReelsBtns
               isLiked={item.liked}
