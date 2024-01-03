@@ -16,7 +16,10 @@ const Profile = () => {
   const loginSelectorToken = useSelector((state) => state.token);
 
   var tokenn = loginSelectorToken;
-  tokenn = tokenn.replaceAll('"', '');
+  // try{
+  //   tokenn = tokenn.replaceAll('"', '');
+
+  // }
   // setSpinnerbool(true)
 
   useEffect(() => {
@@ -33,7 +36,7 @@ const Profile = () => {
       if (res) {
         // console.log(">>>", res.data)
 
-        setUserName([res.data.firstname, "", res.data.lastname])
+        setUserName([res.data.firstname," ",res.data.lastname])
         setStartingLetter(res.data.firstname.charAt(0))
 
         setSpinnerbool(false)
