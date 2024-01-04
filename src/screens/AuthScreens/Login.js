@@ -34,7 +34,11 @@ import { setToken } from '../../redux/actions/loginAction'
 
 import ASO from '../../utils/AsyncStorage_Calls'
 
-const Login = () => {
+const Login = ({route}) => {
+
+  const { params } = route;
+  const emailStoreData = params?.emailSender || '';
+
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
@@ -147,7 +151,7 @@ const Login = () => {
 
               <Formik
                 // initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
-                initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
+                initialValues={{ email: {emailStoreData}, password: "" }}
                 // initialValues={{ email: "", password: "" }}
                 onSubmit={submitHandler}
                 validationSchema={loginSchema}

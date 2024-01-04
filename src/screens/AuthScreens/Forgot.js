@@ -49,9 +49,11 @@ const Forgot = () => {
         setTimeout(() => {
           setLoading(false);
           setSpinnerbool(false)
+       
           const Message = res.data.message
           ToasterSender({ Message: `${Message}` })
-         navigation.navigate("OtpScreen")
+          // navigation.navigate('OtpScreen');
+          navigation.navigate('OtpScreen', { email: email });
 
 
         }, 200);
@@ -63,6 +65,10 @@ const Forgot = () => {
           ToasterSender({ Message: 'Invalid Credentials>' })
           console.log("Error With 400.")
         }
+        else if (error.response.status === 404) {
+          console.log("User not found", error.message)
+        }
+
         else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
         }
@@ -127,13 +133,13 @@ const Forgot = () => {
               <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
                 Don’t worry we are here
               </Text>
-
+              
 
 
 
               <Formik
-                // initialValues={{ email: "" }}
-                initialValues={{ email: "madipellyrohith@gmail.com" }}
+                initialValues={{ email: "" }}
+                // initialValues={{ email: "madipellyrohith@gmail.com" }}
                 onSubmit={submitHandler}
                 validationSchema={ForgotSchema}
               >

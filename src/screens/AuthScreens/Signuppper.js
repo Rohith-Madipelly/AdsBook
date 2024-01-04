@@ -125,85 +125,9 @@ const Login = () => {
                                 }) => (
                                     <>
                                         {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
-                                        {/* firstname*/}
-                                        <View style={styles.inputContainer}>
+                              
 
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.firstname && touched.firstname) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="First Name"
-                                                    autoComplete="name"
-                                                    keyboardType="firstname"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("firstname")}
-                                                    onBlur={handleBlur("firstname")}
-                                                    value={values.firstname}
-                                                    style={{ color: "black" }}
-                                                />
-                                            </View>
-                                            {(errors.firstname && touched.firstname) && (
-                                                <ErrorMessage>{errors.firstname}</ErrorMessage>
-                                            )}
-                                        </View>
-                                        {/* lastname */}
-                                        <View style={styles.inputContainer}>
-
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.firstname && touched.firstname) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Last Name"
-                                                    autoComplete="name"
-                                                    keyboardType="lastname"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("lastname")}
-                                                    onBlur={handleBlur("lastname")}
-                                                    value={values.lastname}
-                                                    style={{ color: "black" }}
-                                                />
-                                            </View>
-                                            {(errors.lastname && touched.lastname) && (
-                                                <ErrorMessage>{errors.lastname}</ErrorMessage>
-                                            )}
-                                        </View>
-
-                                        {/* lastname  end*/}
-                                        {/* <View style={styles.inputContainer}>
-
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.age && touched.age) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="age"
-                                                    autoComplete="ae"
-                                                    keyboardType="age"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("age")}
-                                                    onBlur={handleBlur("age")}
-                                                    value={values.age}
-                                                    style={{ color: "black" }}
-                                                />
-                                            </View>
-                                            {(errors.age && touched.age) && (
-                                                <ErrorMessage>{errors.age}</ErrorMessage>
-                                            )}
-                                        </View> */}
+                                       
 
                                         <View style={styles.inputContainer}>
 
@@ -218,7 +142,7 @@ const Login = () => {
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Gender"
                                                     autoComplete="gender"
-                                                    keyboardType="email-address"
+                                                    // keyboardType="email-address"
                                                     autoCapitalize="none"
                                                     onChangeText={handleChange("gender")}
                                                     onBlur={handleBlur("gender")}
@@ -288,110 +212,7 @@ const Login = () => {
                                         </View>
 
 
-                                        <View style={styles.inputContainer}>
-
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.email && touched.email) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="User Email"
-                                                    autoComplete="email"
-                                                    keyboardType="email-address"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("email")}
-                                                    onBlur={handleBlur("email")}
-                                                    value={values.email}
-                                                    style={{ color: "black" }}
-                                                />
-                                            </View>
-                                            {(errors.email && touched.email) && (
-                                                <ErrorMessage>{errors.email}</ErrorMessage>
-                                            )}
-                                        </View>
-
-
-                                        <View style={styles.inputContainer}>
-
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.phone_number && touched.phone_number) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Phone Number"
-                                                    autoComplete="Phone"
-
-                                                    keyboardType="phone-pad"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("phone_number")}
-                                                    onBlur={handleBlur("phone_number")}
-                                                    value={values.phone_number}
-                                                    style={{ color: "black" }}
-                                                    maxLength={10}
-                                                />
-                                            </View>
-                                            {(errors.phone_number && touched.phone_number) && (
-                                                <ErrorMessage>{errors.phone_number}</ErrorMessage>
-                                            )}
-                                        </View>
-
-
-
-
-                                         <View>
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(touched.password && errors.password) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Password"
-                                                    // autoCapitalize="none"
-                                                    secureTextEntry
-                                                    onChangeText={handleChange("password")}
-                                                    value={values.password}
-                                                    style={{ color: "black" }}
-
-                                                />
-                                            </View>
-                                            {(touched.password && errors.password) && (
-                                                <ErrorMessage>{errors.password}</ErrorMessage>
-                                            )}
-                                        </View>
-
-{/*
-                                        <View>
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(touched.password && errors.password) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Password"
-                                                    // autoCapitalize="none"
-                                                    // secureTextEntry
-                                                    onChangeText={handleChange("password")}
-                                                    value={values.password}
-                                                    style={{ color: "black" }}
-
-                                                />
-                                            </View>
-                                            {(touched.password && errors.password) && (
-                                                <ErrorMessage>{errors.password}</ErrorMessage>
-                                            )}
-                                        </View> */}
+                                    
 
                                         <Button
                                             activeOpacity={0.5}

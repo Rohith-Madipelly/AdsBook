@@ -17,7 +17,7 @@ export const UserLoginApi = async (email, password) => {
 
 
 
-// User Forgot OTP API Call 
+// User Forgot OTP Send API Call 
 export const UserForgotOTPApi = async (email) => {
   const loginData = {
     email: email,
@@ -28,6 +28,29 @@ export const UserForgotOTPApi = async (email) => {
 
 
 
+// User Forgot OTP verifyotp API Call 
+export const UserVerifyOtp = async (email,userOtp) => {
+
+  const ReqData = {
+    email: email,
+    userOtp:userOtp
+  };
+
+  return await axios.post(`${GUEST_URL}/verifyotp`, ReqData);
+};
+
+
+
+// User Forgot OTP verifyotp API Call 
+export const ForgotApiPassRest = async (email,password) => {
+
+  const ReqData = {
+    email: email,
+    password:password
+  };
+
+  return await axios.post(`${GUEST_URL}/forgotpassword`, ReqData);
+};
 
 
   //Profile api 

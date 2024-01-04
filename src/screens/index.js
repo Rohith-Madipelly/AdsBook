@@ -4,7 +4,8 @@ import { useState,useMemo, useEffect } from "react";
 import Welcome from "./Welcome";
 
 import Login from "./AuthScreens/Login";
-import Register from "./AuthScreens/Register";
+// import Register from "./AuthScreens/Register";
+import Register from "./AuthScreens/Signuppper";
 import Forgot from "./AuthScreens/Forgot";
 import OtpScreen from "./AuthScreens/OtpScreen";
 
@@ -89,12 +90,13 @@ useEffect(() => {
       </Stack.Group>
       ):(
       <Stack.Group>
-      <Stack.Screen name="Welcome" component={Welcome} />
-      <Stack.Screen name="Login" component={Login} />
-      <Stack.Screen name="Register" component={Register} /> 
-      <Stack.Screen name="ForgotPassword" component={Forgot} /> 
-       {/* <Stack.Screen name="OtpScreen" component={OtpScreen} /> */}
-       <Stack.Screen name="OtpScreen" component={New} />
+      {/* <Stack.Screen name="Welcome" component={Welcome} />*/}
+      <Stack.Screen name="Login" component={Login} /> 
+       {/* <Stack.Screen name="OtpScreen" component={New} /> */}
+
+      {/* <Stack.Screen name="Register" component={Register} /> */}
+       <Stack.Screen name="ForgotPassword" component={Forgot} /> 
+       <Stack.Screen name="OtpScreen" component={OtpScreen} />
 
       <Stack.Screen name="RestPassword" component={RestPassword} /> 
 
