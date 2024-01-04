@@ -71,25 +71,40 @@ const Login = () => {
 
       }
 
-    } catch (err) {
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          console.log("Error With 400.")
+        }
+        else if (error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+        }
+        else {
+          console.log("An error occurred response.")
+        }
+      }
+      else if (error.request) {
+        console.log("No Response Received From the Server.")
+      }
+      else {
+        console.log("Error in Setting up the Request.")
+      }
 
       ToasterSender({ Message: 'Invalid Credentials>' })
-      ToasterSender({ Message: err })
+      // ToasterSender({ Message: error })
 
       setSpinnerbool(false)
 
-      let message = "Failed to create user.";
+      // let message = "Failed to create user.";
 
-      if (err) {
-        message = err.message;
-      }
-      // setError(message);
-    } finally {
+      // if (error) {
+      //   message = error.message;
+      // }
+    }
+    finally {
       setLoading(false);
       setSpinnerbool(false)
-
     }
-
   }
 
 

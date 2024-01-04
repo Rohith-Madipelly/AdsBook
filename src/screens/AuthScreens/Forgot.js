@@ -12,7 +12,7 @@ import {
   ImageBackground,
 } from "react-native";
 import { useNavigation } from '@react-navigation/native';
-
+import Spinner from 'react-native-loading-spinner-overlay';
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
@@ -24,54 +24,86 @@ import { theme, typographyStyles } from "../../constants";
 import Loader from "../../screenComponents/Shared/Loader/Loader";
 // import { ErrorMessage, Button } from "../screenComponents/Auth";
 import { ErrorMessage, Button } from "../../screenComponents/Auth";
+import { UserForgotOTPApi, UserLoginApi } from "../../utils/API_Calls";
+import { ToasterSender } from "../../utils/Toaster";
 
-import { UserLoginApi } from "../../utils/Apis";
+;
 
 const Forgot = () => {
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState("")
+  const [spinnerBool, setSpinnerbool] = useState(false)
   const navigation = useNavigation();
 
-  const submitHandler = async (user) => {
-    console.log("data >",user)
+  const submitHandler = async (inputData) => {
+    setSpinnerbool(true)
 
-    setLoading(true);
+
     try {
-      const { email} = user;
-      // navigation.navigate('Reels');
-      
+      const { email } = inputData;
 
-      // const res = await UserLoginApi(email, password)
-      // if (res) {
-      //   setLoading(false);
+      const res = await UserForgotOTPApi(email)
 
-      //   console.log(res.data.Token)
-      //   setTimeout(() => {
-      //   setLoading(false);
-      //     navigation.navigate('Reels');
-      //   }, 1000);
-      // }
-      console.log(email, " > ")
+      if (res) {
+
+        setTimeout(() => {
+          setLoading(false);
+          setSpinnerbool(false)
+          const Message = res.data.message
+          ToasterSender({ Message: `${Message}` })
+         navigation.navigate("OtpScreen")
 
 
-    } catch (err) {
-
-      let message = "Failed to create user.";
-
-      if (err) {
-        // message = err.message;
+        }, 200);
       }
-      // setError(message);
-    } finally {
-      setLoading(false);
-    }
 
+    } catch (error) {
+      if (error.response) {
+        if (error.response.status === 400) {
+          ToasterSender({ Message: 'Invalid Credentials>' })
+          console.log("Error With 400.")
+        }
+        else if (error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+        }
+        else {
+          console.log("An error occurred response.")
+        }
+      }
+      else if (error.request) {
+        console.log("No Response Received From the Server.")
+      }
+      else {
+        console.log("Error in Setting up the Request.")
+      }
+
+      // ToasterSender({ Message: 'Invalid Credentials>' })
+      // ToasterSender({ Message: error })
+
+      setSpinnerbool(false)
+
+      // let message = "Failed to create user.";
+
+      // if (error) {
+      //   message = error.message;
+      // }
+    }
+    finally {
+      setLoading(false);
+      // setSpinnerbool(false)
+    }
   }
 
 
   return (
     <>
-      {loading && <Loader />}
+      <Spinner
+        visible={spinnerBool}
+        color={"#5F2404"}
+        animation={'fade'}
+      />
+
+      {/* {loading && <Loader />} */}
       <ImageBackground
         source={require('../../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
         style={styles.containerImageBackground}
@@ -93,23 +125,15 @@ const Forgot = () => {
 
               {/* Correct Way in React native */}
               <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
-              Don’t worry we are here
+                Don’t worry we are here
               </Text>
 
 
 
-              {/* <Image
-                source={require("../../assets/logoImgs/LogoModel.png")}
-                style={styles.image}
-              />
-              <Image
-                source={require("../../assets/logoImgs/LogoName.png")}
-                style={styles.image}
-              /> */}
-
 
               <Formik
-                initialValues={{ email: "" }}
+                // initialValues={{ email: "" }}
+                initialValues={{ email: "madipellyrohith@gmail.com" }}
                 onSubmit={submitHandler}
                 validationSchema={ForgotSchema}
               >
@@ -141,7 +165,7 @@ const Forgot = () => {
                           autoCapitalize="none"
                           onChangeText={handleChange("email")}
                           onBlur={handleBlur("email")}
-                          value={values.email}
+                          value={values.email.toLowerCase()}
                           style={{ color: "black" }}
                         />
                       </View>
@@ -161,7 +185,7 @@ const Forgot = () => {
                       // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
                       bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
                     >
-                      Reset Your Password
+                      GET OTP
                     </Button>
 
 

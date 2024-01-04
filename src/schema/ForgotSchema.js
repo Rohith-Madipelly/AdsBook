@@ -1,5 +1,6 @@
 import * as Yup from "yup";
-const loginSchema = Yup.object().shape({
+const ForgotSchema = Yup.object().shape({
     email: Yup.string().email().required(),
+
   });
-export {loginSchema}
+export {ForgotSchema}

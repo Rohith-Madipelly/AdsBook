@@ -6,6 +6,10 @@ import Welcome from "./Welcome";
 import Login from "./AuthScreens/Login";
 import Register from "./AuthScreens/Register";
 import Forgot from "./AuthScreens/Forgot";
+import OtpScreen from "./AuthScreens/OtpScreen";
+
+import New from "./AuthScreens/New";
+
 import RestPassword from "./AuthScreens/RestPassword";
 import BottomTabScreen from '../Navigations/BottomTabScreen'
 
@@ -85,10 +89,13 @@ useEffect(() => {
       </Stack.Group>
       ):(
       <Stack.Group>
-      {/* <Stack.Screen name="Welcome" component={Welcome} /> */}
+      <Stack.Screen name="Welcome" component={Welcome} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="Register" component={Register} /> 
       <Stack.Screen name="ForgotPassword" component={Forgot} /> 
+       {/* <Stack.Screen name="OtpScreen" component={OtpScreen} /> */}
+       <Stack.Screen name="OtpScreen" component={New} />
+
       <Stack.Screen name="RestPassword" component={RestPassword} /> 
 
 

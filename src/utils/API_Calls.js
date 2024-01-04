@@ -17,7 +17,14 @@ export const UserLoginApi = async (email, password) => {
 
 
 
+// User Forgot OTP API Call 
+export const UserForgotOTPApi = async (email) => {
+  const loginData = {
+    email: email,
+  };
 
+  return await axios.post(`${GUEST_URL}/sendotp`, loginData);
+};
 
 
 
