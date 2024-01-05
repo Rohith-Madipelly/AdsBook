@@ -44,8 +44,8 @@ const Profile = () => {
         var datadsd = res.data.profile_pic
         setProfilepic(datadsd)
 
-        if (datadsd === "") {
 
+        if (datadsd == "") {
         }
         else {
           setProfilepic(`https://ads-reels-pictures.s3.ap-south-1.amazonaws.com/${datadsd}`)
@@ -119,17 +119,9 @@ const Profile = () => {
               <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                 <View>
-                  {/* <View style={styles.outerCircle}>
-                    <ImageBackground
-                      style={styles.innerCircle}
-                      source={require("../../../assets/utilsImages/profile.png")}
-                      resizeMode="cover"
-                    >
-                      <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
-                    </ImageBackground>
-                  </View> */}
+           
 
-                  <View style={styles.outerCircle}>
+                  {profilepic?<View style={styles.outerCircle}>
                     <ImageBackground
                       style={styles.innerCircle}
                       // source={profilepic}
@@ -138,9 +130,17 @@ const Profile = () => {
                       }}
                       resizeMode="cover"
                     >
-                     
+
                     </ImageBackground>
-                  </View>
+                  </View>:<View style={styles.outerCircle}>
+                    <ImageBackground
+                      style={styles.innerCircle}
+                      source={require("../../../assets/utilsImages/profile.png")}
+                      resizeMode="cover"
+                    >
+                      <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
+                    </ImageBackground>
+                  </View>}
                 </View>
 
                 <View style={{ margin: 5, marginLeft: 14 }}>
