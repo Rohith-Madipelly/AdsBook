@@ -61,7 +61,26 @@ export const UserGetProfileDetails = async (token) => {
     }
     
   });
+
 };
+
+
+
+  //Profile PasswordChange
+  export const ChangePasswordAPI = async (old_password,New_Password,tokenn) => {
+    const ReqData = {
+      oldPassword:old_password,
+      newPassword:New_Password,
+    };
+    
+    return await axios.post(`${GUEST_URL}/user/changepassword`
+    ,ReqData,{
+      headers:{ 
+        'Authorization': `Bearer ${tokenn}`
+        // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTQwYTE3MzJhZmRmY2NkMWIzNWIwOCIsImlhdCI6MTcwNDQzNTczOCwiZXhwIjoxNzA0NjA4NTM4fQ.XQ2xpaTQTxgH3343VdZylmd3bqGvdsH_ekRX1p-pnR0'
+      }
+    });
+  };
 
 
 

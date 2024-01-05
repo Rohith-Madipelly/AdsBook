@@ -34,10 +34,7 @@ import { setToken } from '../../redux/actions/loginAction'
 
 import ASO from '../../utils/AsyncStorage_Calls'
 
-const Login = ({route}) => {
-
-  const { params } = route;
-  const emailStoreData = params?.emailSender || '';
+const Login = () => {
 
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -80,6 +77,10 @@ const Login = ({route}) => {
         if (error.response.status === 400) {
           console.log("Error With 400.")
         }
+        else if (error.response.status === 401) {
+          console.log("Password is wrong", error.message)
+          setError("Password is wrong")
+        }
         else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
         }
@@ -94,16 +95,19 @@ const Login = ({route}) => {
         console.log("Error in Setting up the Request.")
       }
 
-      ToasterSender({ Message: 'Invalid Credentials>' })
+      ToasterSender({ Message: error.response.data.message })
       // ToasterSender({ Message: error })
 
       setSpinnerbool(false)
 
-      // let message = "Failed to create user.";
+      let message = "Failed to create user.";
 
-      // if (error) {
-      //   message = error.message;
-      // }
+      if (error) {
+        console.log(error.response.data.message)
+        // message = error.message;
+        // setError(message)
+        
+      }
     }
     finally {
       setLoading(false);
@@ -150,9 +154,9 @@ const Login = ({route}) => {
 
 
               <Formik
-                // initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
-                initialValues={{ email: {emailStoreData}, password: "" }}
-                // initialValues={{ email: "", password: "" }}
+                
+                initialValues={{ email: "", password: "" }}
+               
                 onSubmit={submitHandler}
                 validationSchema={loginSchema}
               >
@@ -166,7 +170,8 @@ const Login = ({route}) => {
                   isValid,
                 }) => (
                   <>
-                    {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
+               
+                    
                     <View style={styles.inputContainer}>
 
 
@@ -213,9 +218,10 @@ const Login = ({route}) => {
 
                         />
                       </View>
-                      {(touched.password && errors.password) && (
+                      {(touched.password && errors.password) && (error)&&(
                         <ErrorMessage>{errors.password}</ErrorMessage>
                       )}
+                      {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
                     </View>
 
                     <Button

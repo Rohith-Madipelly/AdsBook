@@ -1,3 +1,4 @@
+
 import {
   Keyboard,
   KeyboardAvoidingView,
@@ -18,52 +19,49 @@ import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
 
 import Spinner from 'react-native-loading-spinner-overlay';
-import { theme, typographyStyles } from "../../constants";
-
-// import Loader from "../../screenComponents/Shared/Loader/Loader";
-import Loader from "../../screenComponents/Shared/Loader/Loader";
-
-import { ErrorMessage, Button } from "../../screenComponents/Auth";
-
-import { ChangePasswordAPI, ForgotApiPassRest } from "../../utils/API_Calls";
-import { RestPasswordschema } from "../../schema/RestPassword";
-import { ToasterSender } from "../../utils/Toaster";
 
 
-const Login = ({ route }) => {
+import { ErrorMessage, Button } from "../../../screenComponents/Auth";
+
+import { ChangePasswordAPI } from "../../../utils/API_Calls";
+
+import { ToasterSender } from "../../../utils/Toaster";
+import { ChangePassword } from "../../../schema/ChangePassword";
+import { useDispatch, useSelector } from "react-redux";
+
+const Password = ({ route }) => {
   const { params } = route;
   const email = params?.email || 'no Data';
-  
 
   const [spinnerBool, setSpinnerbool] = useState(false)
-  const [loading, setLoading] = useState(false)
+
   const [error, setError] = useState("")
   const navigation = useNavigation();
-
-
-
-
+  let tokenn = useSelector((state) => state.token);
   const submitHandler = async (inputData) => {
 
 
 
-
-    setLoading(true);
     try {
-      const { New_password, Confirm_Password } = inputData;
-      var password=""
-      if (New_password === Confirm_Password) {
-        // console.log(true)
-        password = Confirm_Password;
-
+      if (tokenn != null) {
+        tokenn = tokenn.replaceAll('"', '');
+        console.log(">",tokenn)
       }
-      else {
+    }
+    catch (err) {
+      console.log("Error in token quotes", err)
+    }
 
-      }
+
+
+    try {
+      const { old_password, New_Password } = inputData;
+      console.log(old_password, New_Password,tokenn)
       setSpinnerbool(true)
-
-      const res = await ForgotApiPassRest(email,password)
+      console.log(old_password, New_Password, tokenn)
+      const res = await ChangePasswordAPI(old_password, New_Password, tokenn)
       if (res) {
+       
         const Message = res.data.message
 
         ToasterSender({ Message: `${Message}` })
@@ -71,11 +69,11 @@ const Login = ({ route }) => {
 
 
         setTimeout(() => {
-          setLoading(false);
+
           setSpinnerbool(false)
         }, 50);
         setTimeout(() => {
-          navigation.navigate('Login', { emailSender: email });
+          navigation.navigate('Profile');
           // navigation.navigate('Login');
         }, 60);
 
@@ -84,6 +82,8 @@ const Login = ({ route }) => {
 
     } catch (error) {
       if (error.response) {
+        const errorMessage = error.response.data.message;
+        ToasterSender({ Message: `${errorMessage}` })
         if (error.response.status === 400) {
           console.log("Error With 400.")
         }
@@ -98,10 +98,10 @@ const Login = ({ route }) => {
         console.log("No Response Received From the Server.")
       }
       else {
-        console.log("Error in Setting up the Request.",error)
+        console.log("Error in Setting up the Request.", error)
       }
 
-      ToasterSender({ Message: 'Invalid Credentials>' })
+      // ToasterSender({ Message: 'Invalid Credentials>' })
       // ToasterSender({ Message: error })
 
       setSpinnerbool(false)
@@ -113,7 +113,7 @@ const Login = ({ route }) => {
       // }
     }
     finally {
-      setLoading(false);
+
       setSpinnerbool(false)
     }
 
@@ -131,7 +131,7 @@ const Login = ({ route }) => {
 
 
       <ImageBackground
-        source={require('../../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
+        source={require('../../../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
         style={styles.containerImageBackground}
       >
         <KeyboardAvoidingView
@@ -147,7 +147,7 @@ const Login = ({ route }) => {
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
-              <Text style={[styles.Heading_1, { marginBottom: 20 }]}>Reset Your Password</Text>
+              <Text style={[styles.Heading_1, { marginBottom: 20 }]}>Change Password</Text>
 
               {/* Correct Way in React native */}
               {/* <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
@@ -158,10 +158,10 @@ const Login = ({ route }) => {
 
               <Formik
                 // initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
-                // initialValues={{ email: "madipellyrohith@gmail.com", password: "Rohith@7" }}
-                initialValues={{ New_password: "", Confirm_Password: "" }}
+                initialValues={{ email: "", password: "" }}
+                // initialValues={{ old_password: "Rohith@7", New_Password: "Rohith@123" }}
                 onSubmit={submitHandler}
-                validationSchema={RestPasswordschema}
+                validationSchema={ChangePassword}
               >
                 {({
                   handleChange,
@@ -183,17 +183,17 @@ const Login = ({ route }) => {
                       >
                         <TextInput
                           placeholderTextColor={"#444"}
-                          placeholder="Enter New password"
+                          placeholder="Enter Old password"
                           // autoCapitalize="none"
-                          secureTextEntry
-                          onChangeText={handleChange("New_password")}
-                          value={values.New_password}
+                          // secureTextEntry
+                          onChangeText={handleChange("old_password")}
+                          value={values.old_password}
                           style={{ color: "black" }}
 
                         />
                       </View>
-                      {(touched.New_password && errors.New_password) && (
-                        <ErrorMessage>{errors.New_password}</ErrorMessage>
+                      {(touched.old_password && errors.old_password) && (
+                        <ErrorMessage style={{width:'70'}}>{errors.old_password}</ErrorMessage>
                       )}
                     </View>
 
@@ -201,22 +201,22 @@ const Login = ({ route }) => {
                       <View
                         style={[
                           styles.input,
-                          { borderColor: `${(touched.Confirm_Password && errors.Confirm_Password) ? "red" : "#ccc"}` },
+                          { borderColor: `${(touched.New_Password && errors.New_Password) ? "red" : "#ccc"}` },
                         ]}
                       >
                         <TextInput
                           placeholderTextColor={"#444"}
-                          placeholder="Confirm New Password"
+                          placeholder="Enter New Password"
                           // autoCapitalize="none"
-                          secureTextEntry
-                          onChangeText={handleChange("Confirm_Password")}
-                          value={values.Confirm_Password}
+                          // secureTextEntry
+                          onChangeText={handleChange("New_Password")}
+                          value={values.New_Password}
                           style={{ color: "black" }}
 
                         />
                       </View>
-                      {(touched.Confirm_Password && errors.Confirm_Password) && (
-                        <ErrorMessage>{errors.Confirm_Password}</ErrorMessage>
+                      {(touched.New_Password && errors.New_Password) && (
+                        <ErrorMessage>{errors.New_Password}</ErrorMessage>
                       )}
                     </View>
 
@@ -252,7 +252,7 @@ const Login = ({ route }) => {
   )
 }
 
-export default Login
+export default Password
 
 
 
@@ -263,10 +263,10 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    justifyContent: "center",
+    // justifyContent: "center",
     alignItems: "center",
     padding: "0",
-    margin: "0",
+    marginTop: 100,
     width: '100%',
     height: '100%'
     // backgroundColor: "white",

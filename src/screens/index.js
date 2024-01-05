@@ -19,7 +19,7 @@ import ASO from "../utils/AsyncStorage_Calls";
 import { useSelector,useDispatch } from "react-redux";
 import { setToken } from '../../src/redux/actions/loginAction'
 import Profile from "./MainScreens/Profiles/Profile";
-import Password from "./MainScreens/Profiles/Password";
+import Password from "./MainScreens/Profiles/ChangePassword";
 import Notifications from "./MainScreens/Profiles/Notifications";
 import About from "./MainScreens/Profiles/About";
 import RateReview from "./MainScreens/Profiles/Rate&Review";
@@ -94,7 +94,7 @@ useEffect(() => {
       <Stack.Screen name="Login" component={Login} /> 
        {/* <Stack.Screen name="OtpScreen" component={New} /> */}
 
-      {/* <Stack.Screen name="Register" component={Register} /> */}
+      <Stack.Screen name="Register" component={Register} />
        <Stack.Screen name="ForgotPassword" component={Forgot} /> 
        <Stack.Screen name="OtpScreen" component={OtpScreen} />
 

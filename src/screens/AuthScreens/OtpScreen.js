@@ -50,6 +50,7 @@ const Forgot = ({route}) => {
         setTimeout(() => {
           ToasterSender({ Message: `${Message}` })
           console.log("done go to change password")
+          console.log(email)
           navigation.navigate('RestPassword', { email: email });
           setLoading(false);
           setSpinnerbool(false);

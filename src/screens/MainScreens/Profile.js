@@ -1,4 +1,4 @@
-import { Text, StyleSheet,ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert } from 'react-native'
+import { Text, StyleSheet, ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert } from 'react-native'
 import React, { Component, useEffect, useState } from 'react'
 import { Button } from '../../screenComponents/Auth'
 import { useDispatch, useSelector } from "react-redux";
@@ -12,8 +12,9 @@ const Profile = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [UserName, setUserName] = useState("")
   const [StartingLetter, setStartingLetter] = useState("")
+  const [profilepic, setProfilepic] = useState(null)
   const dispatch = useDispatch();
-  let tokenn =  useSelector((state) => state.token);
+  let tokenn = useSelector((state) => state.token);
 
   try {
     if (tokenn != null) {
@@ -21,7 +22,7 @@ const Profile = () => {
     }
   }
   catch (err) {
-    console.log("Error in token quotes",err)
+    console.log("Error in token quotes", err)
   }
 
   useEffect(() => {
@@ -36,11 +37,21 @@ const Profile = () => {
 
 
       if (res) {
-        // console.log(">>>", res.data)
+        console.log(">>>", res.data)
 
-        setUserName([res.data.firstname," ",res.data.lastname])
+        setUserName([res.data.firstname, " ", res.data.lastname])
         setStartingLetter(res.data.firstname.charAt(0))
+        var datadsd = res.data.profile_pic
+        setProfilepic(datadsd)
 
+        if (datadsd === "") {
+
+        }
+        else {
+          setProfilepic(`https://ads-reels-pictures.s3.ap-south-1.amazonaws.com/${datadsd}`)
+
+        }
+        console.log(profilepic)
         setSpinnerbool(false)
       }
       else {
@@ -108,13 +119,26 @@ const Profile = () => {
               <View style={{ display: '', flexDirection: 'row', justifyContent: 'flex-start' }}>
 
                 <View>
-                    <View style={styles.outerCircle}>
+                  {/* <View style={styles.outerCircle}>
                     <ImageBackground
                       style={styles.innerCircle}
                       source={require("../../../assets/utilsImages/profile.png")}
                       resizeMode="cover"
                     >
                       <Text style={styles.letter}>{StartingLetter.toLocaleUpperCase()}</Text>
+                    </ImageBackground>
+                  </View> */}
+
+                  <View style={styles.outerCircle}>
+                    <ImageBackground
+                      style={styles.innerCircle}
+                      // source={profilepic}
+                      source={{
+                        uri: profilepic,
+                      }}
+                      resizeMode="cover"
+                    >
+                     
                     </ImageBackground>
                   </View>
                 </View>

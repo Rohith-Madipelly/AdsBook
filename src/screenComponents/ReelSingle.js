@@ -147,7 +147,7 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
             onPlaybackStatusUpdate={(status) => onPlaybackStatusUpdate(status)}
 
           />
-
+{/* <Text>{item.videoId}</Text> */}
           <View>
 
             {/* <ReelDescription description={item.description} /> */}
@@ -161,6 +161,8 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
             // UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
             // index={currentIndex}
             />
+
+            
           </View>
 
         </>

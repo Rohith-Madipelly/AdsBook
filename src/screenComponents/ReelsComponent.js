@@ -40,7 +40,9 @@ const ReelsComponent = ({ isReelPage }) => {
             setvideoData((prevItems) => [...prevItems, ...Data]);
             
             
-            console.log("Saved Or not", videoData)
+            // console.log("Saved Or not", videoData)
+            // console.log("Saved Or not", videoData[0].videoId)
+
             setSpinnerbool(false)
         }
         catch (error) {
@@ -67,7 +69,7 @@ const ReelsComponent = ({ isReelPage }) => {
         }
     }
 
-    console.log("Data From page", videoData)
+    // console.log("Data From page", videoData)
     useEffect(() => {
         GetVideos()
     }, [])
