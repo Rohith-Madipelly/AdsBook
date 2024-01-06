@@ -4,39 +4,44 @@ import { Video, ResizeMode } from 'expo-av';
 import { ActivityIndicator } from 'react-native';
 import ReelsBtns from "./ReelsBtns";
 import ReelDescription from './ReelDescription';
+import { useSelector } from 'react-redux';
+import { rewardedAPI } from '../utils/API_Calls';
+import { ToasterSender } from '../utils/Toaster';
 
 
-const ReelSingle = ({ item, index, currentIndex, play }) => {
+const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
   
   const [isBuffering, setIsBuffering] = useState(true);
-  const AWSBaseUrl="https://ads-book-s3.s3.ap-south-1.amazonaws.com"
-  useEffect(() => {
-   
-      if (currentIndex === index) {
-        videoRef.current.replayAsync();
-        PlayVideo()
-      }
-      // else if (currentIndex != index) {
-      //   PauseVideo()
-      // }
+  const AWSBaseUrl = "https://ads-book-s3.s3.ap-south-1.amazonaws.com"
 
-      else {
-        PauseVideo()
-      }
-    
+  const videoRef = useRef(null)
+  useEffect(() => {
+
+    if (currentIndex === index) {
+      videoRef.current.replayAsync();
+      PlayVideo()
+    }
+    // else if (currentIndex != index) {
+    //   PauseVideo()
+    // }
+
+    else {
+      PauseVideo()
+    }
+
 
   }, [currentIndex])
 
 
-  useEffect(()=>{
-    if(play){
+  useEffect(() => {
+    if (play) {
 
     }
-    else{
+    else {
       PauseVideo()
     }
 
-  },[play])
+  }, [play])
 
   const PlayVideo = async () => {
     try {
@@ -76,7 +81,7 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
   const windoWidth = Dimensions.get('window').width
   const windowHeight = Dimensions.get('window').height
 
-  const videoRef = useRef(null)
+
 
   const onBuffer = buffer => {
     setIsBuffering(buffer.isBuffering);
@@ -84,6 +89,60 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
   const onError = onError => {
     console.log("error i am buffering", onError);
   }
+  const HitAPi=async()=>{
+    try {
+      const res = await rewardedAPI(dateVideorewardedAPI,tokenn)
+      if (res) {
+       
+        const Message = res.data.message
+  
+        ToasterSender({ Message: `${Message}` })
+  
+      }
+  
+    } catch (error) {
+      if (error.response) {
+        const errorMessage = error.response.data.message;
+        ToasterSender({ Message: `${errorMessage}` })
+        if (error.response.status === 400) {
+          console.log("Error With 400.")
+        }
+        else if (error.response.status === 500) {
+          console.log("Internal Server Error", error.message)
+        }
+        else {
+          console.log("An error occurred response.")
+        }
+      }
+      else if (error.request) {
+        console.log("No Response Received From the Server.")
+      }
+      else {
+        console.log("Error in Setting up the Request.", error)
+      }
+  
+  
+    }
+    finally {
+  
+    }
+  }
+  const dateVideorewardedAPI=item.videoId;
+  const Rewarder = async () => {
+    // rewardedAPI
+    // console.error(dateVideorewardedAPI)
+
+    HitAPi()
+    
+
+
+  }
+
+
+
+
+
+
 
 
 
@@ -93,14 +152,16 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
     // console.error(status)
     // videoRef.current.replayAsync();
 
+
     // Check if the video has just started playing
     if (status.didJustFinish) {
       // Video finished playing, seek to the beginning
       videoRef.current.replayAsync();
+      Rewarder()
       // console.log("Reel Single Page : 94 >> Video is replaying now again")
-      const Amount = item.Price
-      console.error("You Have Completed watching this reels.")
-      console.error(" Your have earned ", item.Price)
+      // const Amount = item.Price
+      // console.error("You Have Completed watching this reels.")
+      // console.error(" Your have earned ", item.Price)
 
     }
 
@@ -147,7 +208,7 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
             onPlaybackStatusUpdate={(status) => onPlaybackStatusUpdate(status)}
 
           />
-{/* <Text>{item.videoId}</Text> */}
+          {/* <Text>{item.videoId}</Text> */}
           <View>
 
             {/* <ReelDescription description={item.description} /> */}
@@ -158,11 +219,12 @@ const ReelSingle = ({ item, index, currentIndex, play }) => {
               likes={item.likes}
               shares={item.shares}
               comments={item.comments}
+              dateVideorewardedAPI={dateVideorewardedAPI}
             // UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
             // index={currentIndex}
             />
 
-            
+
           </View>
 
         </>

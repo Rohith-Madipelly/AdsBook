@@ -77,7 +77,6 @@ export const UserGetProfileDetails = async (token) => {
     ,ReqData,{
       headers:{ 
         'Authorization': `Bearer ${tokenn}`
-        // 'Authorization': 'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1OTQwYTE3MzJhZmRmY2NkMWIzNWIwOCIsImlhdCI6MTcwNDQzNTczOCwiZXhwIjoxNzA0NjA4NTM4fQ.XQ2xpaTQTxgH3343VdZylmd3bqGvdsH_ekRX1p-pnR0'
       }
     });
   };
@@ -94,3 +93,40 @@ export const UserGetProfileDetails = async (token) => {
       
     });
   };
+
+
+    //Profile rewarded
+    export const rewardedAPI = async (videoId,tokenn) => {
+      const ReqData = {
+        videoId:videoId,
+      };
+      
+      return await axios.post(`${GUEST_URL}/user/wallet`
+      ,ReqData,{
+        headers:{ 
+          'Authorization': `Bearer ${tokenn}`
+        }
+      });
+    };
+  
+// Get Wallet Amount
+    export const GetWalletAmountAPI = async (token) => {
+      return await axios.get(`${GUEST_URL}/user/walletamount` ,{
+        headers:  { 
+          'Authorization':`Bearer ${token}`
+        }
+        
+      });
+    };
+
+
+
+    //Put Like Video
+    export const PutLikeVideoAPI = async (token) => {
+      return await axios.get(`${GUEST_URL}/user/walletamount` ,{
+        headers:  { 
+          'Authorization':`Bearer ${token}`
+        }
+        
+      });
+    };

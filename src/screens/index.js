@@ -71,9 +71,11 @@ useEffect(() => {
         headerShown:false
       }}
      
-    >{
+    >
+      {
       user?(
       <Stack.Group screenOptions={{animationTypeForReplace:'pop',}}>
+      <Stack.Screen name="Login" component={Login} /> 
 
       <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
 
@@ -90,14 +92,10 @@ useEffect(() => {
       </Stack.Group>
       ):(
       <Stack.Group>
-      {/* <Stack.Screen name="Welcome" component={Welcome} />*/}
       <Stack.Screen name="Login" component={Login} /> 
-       {/* <Stack.Screen name="OtpScreen" component={New} /> */}
-
       <Stack.Screen name="Register" component={Register} />
        <Stack.Screen name="ForgotPassword" component={Forgot} /> 
        <Stack.Screen name="OtpScreen" component={OtpScreen} />
-
       <Stack.Screen name="RestPassword" component={RestPassword} /> 
 
 

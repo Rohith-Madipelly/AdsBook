@@ -10,6 +10,7 @@ import StackNavigator from './src/screens/index'
 // Redux
 import { Provider } from "react-redux";
 import { store } from './src/redux/store';
+import BottomTabScreen from './src/Navigations/BottomTabScreen';
 
 
 SplashScreen.preventAutoHideAsync();
@@ -46,8 +47,9 @@ export default function App() {
     <Provider store={store}>
       <NavigationContainer >
         <StackNavigator />
+
       </NavigationContainer>
-    </Provider>
+     </Provider>
   );
 }
 

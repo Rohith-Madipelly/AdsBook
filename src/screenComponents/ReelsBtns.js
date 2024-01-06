@@ -16,6 +16,8 @@ import {
 } from "@expo/vector-icons";
 import { typographyStyles } from "../constants";
 import { formatNumber } from "../utils";
+import ShareExample from "./ShareBtn";
+import onShare from "./ShareBtn";
 
 const windoWidth = Dimensions.get('window').width
 const windowHeight = Dimensions.get('window').height
@@ -29,10 +31,18 @@ const ReelsBtns = ({
   comments,
   UploaderthumbnailUrl,
   index,
+  dateVideorewardedAPI
 }) => {
-
-  const [liked, setLiked] = useState(isLiked);
+    const [liked, setLiked] = useState(isLiked);
   // setLiked(isLiked)
+
+const LikesFuncationly=()=>{
+  console.log("Likede ededed ")
+  
+}
+
+
+
   return (
     <View style={styles.container}>
 
@@ -43,7 +53,7 @@ const ReelsBtns = ({
 
       <TouchableOpacity
         style={styles.btn}
-        onPress={() => setLiked((prevState) => !prevState)}
+        onPress={() => {setLiked((prevState) => !prevState),LikesFuncationly()}}
       >
         {liked ? (
           <Entypo name="heart" size={35} color="red" />
@@ -53,8 +63,8 @@ const ReelsBtns = ({
 
         <Text style={[styles.text, typographyStyles.md]}>
 
-          {/* {liked ? formatNumber(likes + 1) : formatNumber(likes)} */}
-          {likes}
+          {liked ? formatNumber(likes + 1) : formatNumber(likes)}
+          {/* {likes} */}
           {/* {liked ? formatNumber((likes ?? 0) + 1) : formatNumber(likes ?? 0)} */}
 
         </Text>
@@ -77,13 +87,15 @@ const ReelsBtns = ({
 
 
 
-      <TouchableOpacity style={styles.btn}>
+      <TouchableOpacity style={styles.btn} onPress={()=>{onShare(`This is the refern of video ${dateVideorewardedAPI}`)}}>
         <Ionicons name="paper-plane-outline" size={35} color={"white"} style={styles.btnbtn} />
         <Text style={[styles.text, typographyStyles.md]}>
           {/* {formatNumber(shares)}  */}
           Share
+      
           {/* shares of {index} */}
         </Text>
+
       </TouchableOpacity>
 
 

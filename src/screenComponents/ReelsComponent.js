@@ -24,7 +24,7 @@ const ReelsComponent = ({ isReelPage }) => {
 
     try {
         if (tokenn != null) {
-            tokenn = tokenn.replaceAll('"', '');
+            tokenn=  tokenn.replaceAll('"', '');
         }
     }
     catch (err) {
@@ -97,7 +97,7 @@ const ReelsComponent = ({ isReelPage }) => {
             // loadMinimal
             // loadMinimalSize={1}
             renderItem={({ item, index }) => (
-                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} />
+                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} tokenn={tokenn}/>
             )}
             keyExtractor={(item, index) => index.toString()}
             // keyExtractor={(item, index) => index}
