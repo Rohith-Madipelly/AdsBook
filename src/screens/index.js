@@ -1,5 +1,5 @@
 import { createStackNavigator } from "@react-navigation/stack";
-import { useState,useMemo, useEffect } from "react";
+import { useState, useMemo, useEffect } from "react";
 
 import Welcome from "./Welcome";
 
@@ -16,7 +16,7 @@ import BottomTabScreen from '../Navigations/BottomTabScreen'
 
 import ASO from "../utils/AsyncStorage_Calls";
 
-import { useSelector,useDispatch } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { setToken } from '../../src/redux/actions/loginAction'
 import Profile from "./MainScreens/Profiles/Profile";
 import Password from "./MainScreens/Profiles/ChangePassword";
@@ -27,9 +27,11 @@ import PrivacyPolicy from "./MainScreens/Profiles/PrivacyPolicy";
 import ShareApp from "./MainScreens/Profiles/ShareApp";
 import Help from "./MainScreens/Profiles/Help";
 
+import { NavigationContainer } from '@react-navigation/native';
+
 
 export default function Screens() {
-  const [user,setUser] =useState(true)
+  const [user, setUser] = useState(true)
 
   const Stack = createStackNavigator();
   const dispatch = useDispatch();
@@ -37,74 +39,77 @@ export default function Screens() {
   const loginSelector = useSelector((state) => state.isLogin);
 
 
-  const verifyToken = async () => { 
-      ASO.getTokenJWT('Token', (error, token) => {
-        if (error) {
-          console.error('Error getting token:', error);
-        } else {
-          // console.log('Retrieved token:', token);
-          if(token!=null){
-            dispatch(setToken(token));
-            console.log(token)
-          }
+  const verifyToken = async () => {
+    ASO.getTokenJWT('Token', (error, token) => {
+      if (error) {
+        console.error('Error getting token:', error);
+      } else {
+        // console.log('Retrieved token:', token);
+        if (token != null) {
+          dispatch(setToken(token));
+          console.log(token)
         }
-      });
+      }
+    });
   }
 
-// setUser(loginSelector)
-useEffect(()=>{
-  verifyToken();
-},[])
+  // setUser(loginSelector)
+  useEffect(() => {
+    verifyToken();
+  }, [])
 
-useEffect(() => {
-  setUser(loginSelector)
-  // console.log("loginSelector",loginSelector)
+  useEffect(() => {
+    setUser(loginSelector)
+    console.log("loginSelector",loginSelector)
 
-}, [loginSelector])
+  }, [loginSelector])
 
 
 
 
   return (
-    <Stack.Navigator
-      screenOptions={{
-        headerShown:false
-      }}
-     
-    >
-      {
-      user?(
-      <Stack.Group screenOptions={{animationTypeForReplace:'pop',}}>
-      <Stack.Screen name="Login" component={Login} /> 
+    <NavigationContainer >
+      <Stack.Navigator
+        initialRouteName={user ? 'Bottom-navigator' : 'Register'}
+        screenOptions={{
+          headerShown: false
+        }}
 
-      <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
-
-      <Stack.Screen name="ProfileProfile" component={Profile} />
-      <Stack.Screen name="ProfilePassword" component={Password} />
-      <Stack.Screen name="ProfileNotifications" component={Notifications} />
-      <Stack.Screen name="ProfileAbout" component={About} />
-      <Stack.Screen name="ProfileRateAndReview" component={RateReview} />
-      <Stack.Screen name="ProfilePrivacyPolicy" component={PrivacyPolicy} />
-      <Stack.Screen name="ProfileShareApp" component={ShareApp} />
-      <Stack.Screen name="ProfileHelp" component={Help} />
-
-    
-      </Stack.Group>
-      ):(
-      <Stack.Group>
-      <Stack.Screen name="Login" component={Login} /> 
-      <Stack.Screen name="Register" component={Register} />
-       <Stack.Screen name="ForgotPassword" component={Forgot} /> 
-       <Stack.Screen name="OtpScreen" component={OtpScreen} />
-      <Stack.Screen name="RestPassword" component={RestPassword} /> 
+      >
+        {
+          user ? (
+            <Stack.Group screenOptions={{ animationTypeForReplace: 'pop', }}>
 
 
+              <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
+
+              <Stack.Screen name="ProfileProfile" component={Profile} />
+              <Stack.Screen name="ProfilePassword" component={Password} />
+              <Stack.Screen name="ProfileNotifications" component={Notifications} />
+              <Stack.Screen name="ProfileAbout" component={About} />
+              <Stack.Screen name="ProfileRateAndReview" component={RateReview} />
+              <Stack.Screen name="ProfilePrivacyPolicy" component={PrivacyPolicy} />
+              <Stack.Screen name="ProfileShareApp" component={ShareApp} />
+              <Stack.Screen name="ProfileHelp" component={Help} />
 
 
-      </Stack.Group>
-      )
-      }
-    </Stack.Navigator>
+            </Stack.Group>
+          ) : (
+            <Stack.Group>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen name="Register" component={Register} />
+              <Stack.Screen name="ForgotPassword" component={Forgot} />
+              <Stack.Screen name="OtpScreen" component={OtpScreen} />
+              <Stack.Screen name="RestPassword" component={RestPassword} />
+
+
+
+
+            </Stack.Group>
+          )
+        }
+      </Stack.Navigator>
+    </NavigationContainer>
   );
 }
 

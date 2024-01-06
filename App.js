@@ -45,10 +45,10 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <NavigationContainer >
+      {/* <NavigationContainer > */}
         <StackNavigator />
 
-      </NavigationContainer>
+      {/* </NavigationContainer> */}
      </Provider>
   );
 }
