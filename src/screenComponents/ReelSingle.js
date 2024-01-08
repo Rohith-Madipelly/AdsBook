@@ -50,9 +50,9 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
       if (videoRef.current !== null) {
         videoRef.current.playAsync()
       }
-      // else{
-      //   return;
-      // }
+      else{
+        return;
+      }
     } catch (error) { console.log("Error in PlayVideo", currentIndex) }
   };
 
@@ -63,9 +63,9 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
       if (videoRef.current !== null) {
         videoRef.current.pauseAsync()
       }
-      // else{
-      //   return;
-      // }
+      else{
+        return;
+      }
     } catch (error) { console.log("Error in PauseVideo", currentIndex) }
   };
 
@@ -86,18 +86,17 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
   const onBuffer = buffer => {
     setIsBuffering(buffer.isBuffering);
   }
+
   const onError = onError => {
     console.log("error i am buffering", onError);
   }
+
   const HitAPi=async()=>{
     try {
       const res = await rewardedAPI(dateVideorewardedAPI,tokenn)
       if (res) {
-       
         const Message = res.data.message
-  
         ToasterSender({ Message: `${Message}` })
-  
       }
   
     } catch (error) {
@@ -120,8 +119,6 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
       else {
         console.log("Error in Setting up the Request.", error)
       }
-  
-  
     }
     finally {
   
@@ -129,20 +126,8 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
   }
   const dateVideorewardedAPI=item.videoId;
   const Rewarder = async () => {
-    // rewardedAPI
-    // console.error(dateVideorewardedAPI)
-
     HitAPi()
-    
-
-
   }
-
-
-
-
-
-
 
 
 
@@ -168,9 +153,6 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
     if (status.isLoaded && !status.isBuffering) {
       setIsBuffering(false);
     }
-
-
-
   };
 
 
@@ -212,7 +194,7 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
           <View>
 
             {/* <ReelDescription description={item.description} /> */}
-            <ReelDescription description={"Rohith"} />
+            <ReelDescription description={" "} />
             {/* <Text>uasgdfuf</Text> */}
             <ReelsBtns
               isLiked={item.liked}

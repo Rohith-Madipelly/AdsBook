@@ -1,11 +1,12 @@
-import { createStackNavigator } from "@react-navigation/stack";
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState, useMemo, useEffect } from "react";
 
 import Welcome from "./Welcome";
 
 import Login from "./AuthScreens/Login";
+import Register from "./AuthScreens/NewSign";
 // import Register from "./AuthScreens/Register";
-import Register from "./AuthScreens/Signuppper";
+// import Register from "./AuthScreens/Signuppper";
 import Forgot from "./AuthScreens/Forgot";
 import OtpScreen from "./AuthScreens/OtpScreen";
 
@@ -26,14 +27,13 @@ import RateReview from "./MainScreens/Profiles/Rate&Review";
 import PrivacyPolicy from "./MainScreens/Profiles/PrivacyPolicy";
 import ShareApp from "./MainScreens/Profiles/ShareApp";
 import Help from "./MainScreens/Profiles/Help";
-
-import { NavigationContainer } from '@react-navigation/native';
+import { NavigationContainer } from "@react-navigation/native";
+import { Text, View } from "react-native";
 
 
 export default function Screens() {
   const [user, setUser] = useState(true)
-
-  const Stack = createStackNavigator();
+  const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
 
   const loginSelector = useSelector((state) => state.isLogin);
@@ -53,15 +53,20 @@ export default function Screens() {
     });
   }
 
+  
+
   // setUser(loginSelector)
   useEffect(() => {
-    verifyToken();
-  }, [])
+    const fetchData = async () => {
+      await verifyToken();
+    };
+  
+    fetchData();
+  }, []);
+  
 
   useEffect(() => {
     setUser(loginSelector)
-    console.log("loginSelector",loginSelector)
-
   }, [loginSelector])
 
 
@@ -69,20 +74,15 @@ export default function Screens() {
 
   return (
     <NavigationContainer >
-      <Stack.Navigator
-        initialRouteName={user ? 'Bottom-navigator' : 'Register'}
+      <Stack.Navigator initialRouteName={user ? 'Bottom-navigator' : 'Register'}
         screenOptions={{
           headerShown: false
-        }}
-
-      >
-        {
-          user ? (
-            <Stack.Group screenOptions={{ animationTypeForReplace: 'pop', }}>
-
-
+        }}>
+        <Stack.Group >
+          {user ? (
+            <>
+              {/* <Stack.Screen name="Login" component={Login} /> */}
               <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
-
               <Stack.Screen name="ProfileProfile" component={Profile} />
               <Stack.Screen name="ProfilePassword" component={Password} />
               <Stack.Screen name="ProfileNotifications" component={Notifications} />
@@ -91,25 +91,23 @@ export default function Screens() {
               <Stack.Screen name="ProfilePrivacyPolicy" component={PrivacyPolicy} />
               <Stack.Screen name="ProfileShareApp" component={ShareApp} />
               <Stack.Screen name="ProfileHelp" component={Help} />
-
-
-            </Stack.Group>
+            </>
           ) : (
-            <Stack.Group>
-              <Stack.Screen name="Login" component={Login} />
+            <>
+              {/* <Stack.Screen name="Login" component={Login} /> */}
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="ForgotPassword" component={Forgot} />
               <Stack.Screen name="OtpScreen" component={OtpScreen} />
               <Stack.Screen name="RestPassword" component={RestPassword} />
-
-
-
-
-            </Stack.Group>
-          )
-        }
+            </>
+        )
+      }
+       </Stack.Group>
       </Stack.Navigator>
+
     </NavigationContainer>
+
+
   );
 }
 

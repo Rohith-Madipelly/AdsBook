@@ -21,7 +21,7 @@ const Profile = () => {
       tokenn = tokenn.replaceAll('"', '');
     }
   }
-  catch (err) {
+  catch (err) { 
     console.log("Error in token quotes", err)
   }
 

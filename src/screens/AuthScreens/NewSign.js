@@ -33,8 +33,10 @@ import { setToken } from '../../redux/actions/loginAction'
 
 
 import ASO from '../../utils/AsyncStorage_Calls'
+import { signupSchema } from "../../schema/signUpSchema";
+import { Picker } from "@react-native-picker/picker";
 
-const Login = () => {
+const Register = () => {
 
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [loading, setLoading] = useState(false)
@@ -79,7 +81,7 @@ const Login = () => {
         }
         else if (error.response.status === 401) {
           console.log("Password is wrong", error.message)
-          // setError("Password is wrong")
+          setError("Password is wrong")
         }
         else if (error.response.status === 500) {
           console.log("Internal Server Error", error.message)
@@ -145,21 +147,21 @@ const Login = () => {
 
           <TouchableWithoutFeedback onPress={Keyboard.dismiss}>
             <View>
-              <Text style={styles.Heading_1}>Welcome Back</Text>
+              <Text style={styles.Heading_1}>Don’t Have Account..?</Text>
 
               {/* Correct Way in React native */}
               <Text style={[styles.Heading_2, { marginVertical: 10, marginBottom: 25 }]}>
-                Login in Your Account
+                Create Account
               </Text>
 
 
 
               <Formik
 
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ fName: "", lName: "", userAge: "", userGender: "", email: "",phoneNo:"", password: "" }}
 
                 onSubmit={submitHandler}
-                validationSchema={loginSchema}
+                validationSchema={signupSchema}
               >
                 {({
                   handleChange,
@@ -172,24 +174,134 @@ const Login = () => {
                 }) => (
                   <>
 
+                    
 
+
+
+                    {/* First Name */}
                     <View style={styles.inputContainer}>
+                      <View
+                        style={[
+                          styles.input,
+                          { borderColor: `${(errors.fName && touched.fName) ? "red" : "#ccc"}` },
+                        ]}
+                      >
+                        <TextInput
+                          placeholderTextColor={"#444"}
+                          placeholder="First Name"
+                          // autoComplete="email"
+                          // keyboardType="email-address"
+                          // autoCapitalize="none"
+                          onChangeText={handleChange("fName")}
+                          onBlur={handleBlur("fName")}
+                          value={values.fName}
+                          style={{ color: "black" }}
+                        />
+                      </View>
 
+                      <View style={{ marginLeft: 10 }}>
+                        {(errors.fName && touched.fName) && (
+                          <ErrorMessage>{errors.fName}</ErrorMessage>
+                        )}
+                      </View>
+                    </View>
 
+                    {/* Last Name */}
+                    <View style={styles.inputContainer}>
+                      <View
+                        style={[
+                          styles.input,
+                          { borderColor: `${(errors.lName && touched.lName) ? "red" : "#ccc"}` },
+                        ]}
+                      >
+                        <TextInput
+                          placeholderTextColor={"#444"}
+                          placeholder="Last Name"
+                          // autoComplete="email"
+                          // keyboardType="email-address"
+                          // autoCapitalize="none"
+                          onChangeText={handleChange("lName")}
+                          onBlur={handleBlur("lName")}
+                          value={values.lName}
+                          style={{ color: "black" }}
+                        />
+                      </View>
+
+                      <View style={{ marginLeft: 10 }}>
+                        {(errors.lName && touched.lName) && (
+                          <ErrorMessage>{errors.lName}</ErrorMessage>
+                        )}
+                      </View>
+                    </View>
+
+                    {/* Gender */}
+                    <View style={styles.inputContainer}>
+                      <View
+                        style={[
+                          styles.input, { padding: 0, },
+                          { borderColor: `${(errors.userGender && touched.userGender) ? "red" : "#ccc"}` },
+                        ]}
+                      >
+                        <Picker
+                          // selectedValue={values.userGender}
+                          selectedValue={values.userGender}
+                          onValueChange={(itemValue) => handleChange("userGender")(itemValue)}
+                          style={{ height: 50, marginTop: -5, marginLeft: -5 }}
+                        >
+                          <Picker.Item label="Select Gender" value="" />
+                          <Picker.Item label="Male" value="male" />
+                          <Picker.Item label="Female" value="female" />
+                        </Picker>
+                      </View>
+
+                      <View style={{ marginLeft: 10 }}>
+                        {(errors.userGender && touched.userGender) && (
+                          <ErrorMessage>{errors.userGender}</ErrorMessage>
+                        )}
+                      </View>
+                    </View>
+
+                    {/* Users Age */}
+                    <View style={styles.inputContainer}>
+                      <View
+                        style={[
+                          styles.input,
+                          { borderColor: `${(errors.userAge && touched.userAge) ? "red" : "#ccc"}` },
+                        ]}
+                      >
+                        <TextInput
+                          placeholderTextColor={"#444"}
+                          placeholder="Age"
+                          // autoComplete="email"
+                          keyboardType="number-pad"
+                          // autoCapitalize="none"
+                          onChangeText={handleChange("userAge")}
+                          onBlur={handleBlur("userAge")}
+                          value={values.userAge}
+                          style={{ color: "black" }}
+                        />
+                      </View>
+                      <View style={{ marginLeft: 10 }}>
+                        {(errors.userAge && touched.userAge) && (
+                          <ErrorMessage>{errors.userAge}</ErrorMessage>
+                        )}
+                      </View>
+                    </View>
+
+                    {/* Email Address */}
+                    <View style={styles.inputContainer}>
                       <View
                         style={[
                           styles.input,
                           { borderColor: `${(errors.email && touched.email) ? "red" : "#ccc"}` },
                         ]}
                       >
-
-
                         <TextInput
                           placeholderTextColor={"#444"}
                           placeholder="Email Address"
-                          autoComplete="email"
+                          // autoComplete="email"
                           keyboardType="email-address"
-                          autoCapitalize="none"
+                          // autoCapitalize="none"
                           onChangeText={handleChange("email")}
                           onBlur={handleBlur("email")}
                           value={values.email}
@@ -202,6 +314,36 @@ const Login = () => {
                         )}
                       </View>
                     </View>
+
+                     {/* Phone Number */}
+                     <View style={styles.inputContainer}>
+                      <View
+                        style={[
+                          styles.input,
+                          { borderColor: `${(errors.phoneNo && touched.phoneNo) ? "red" : "#ccc"}` },
+                        ]}
+                      >
+                        {/* phoneNo */}
+                        <TextInput
+                          placeholderTextColor={"#444"}
+                          placeholder="Phone Number"
+                          // autoComplete="email"
+                          keyboardType="numeric"
+                          // autoCapitalize="none"
+                          onChangeText={handleChange("phoneNo")}
+                          onBlur={handleBlur("phoneNo")}
+                          value={values.phoneNo}
+                          style={{ color: "black" }}
+                        />
+                      </View>
+                      <View style={{ marginLeft: 10 }}>
+                        {(errors.phoneNo && touched.phoneNo) && (
+                          <ErrorMessage>{errors.phoneNo}</ErrorMessage>
+                        )}
+                      </View>
+                    </View>
+
+                    {/* Password */}
                     <View>
                       <View
                         style={[
@@ -220,15 +362,13 @@ const Login = () => {
 
                         />
                       </View>
-
-
                       <View style={{ marginLeft: 10 }}>
+
                         {(touched.password && errors.password) && (
                           <ErrorMessage>{errors.password}</ErrorMessage>
                         )}
                         {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
                       </View>
-
                     </View>
 
                     <Button
@@ -242,40 +382,9 @@ const Login = () => {
                     >
                       Login
                     </Button>
-
-
-                    <View style={styles.forgotPasswordContainer}>
-                      <Text
-                        style={[
-                          {
-                            color: theme.colors.primaryBlue,
-                            fontWeight: "500",
-                            fontSize: 14,
-                          },
-                          typographyStyles.md,
-                        ]}
-                        onPress={() => navigation.navigate("ForgotPassword")}
-                      >
-                        Forgot Password
-                      </Text>
-                    </View>
-
-                    <Button
-                      activeOpacity={0.5}
-                      onPress={() => navigation.navigate("Register")}
-                      btnStyle={{ marginTop: 10 }}
-                      // bgColor={`${!isValid ? "rgba(242, 142, 128, 0.7)" : "rgba(242, 142, 128, 1)"}`}
-                      bgColor={"rgba(250, 142, 128, 1)"}
-                    >
-                      Don’t have an account? Sign up
-                    </Button>
                   </>
                 )}
-
-
               </Formik>
-
-
             </View>
           </TouchableWithoutFeedback>
           <View>
@@ -287,7 +396,7 @@ const Login = () => {
   )
 }
 
-export default Login
+export default Register
 
 
 
@@ -331,6 +440,7 @@ const styles = StyleSheet.create({
     marginBottom: 12,
 
   },
+
   input: {
     width: 300,
     // backgroundColor: "#121212",

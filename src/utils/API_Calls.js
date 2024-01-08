@@ -11,7 +11,7 @@ export const UserLoginApi = async (email, password) => {
       password: password
     };
   
-    return await axios.post(`${GUEST_URL}/login`, loginData);
+    return await axios.post(`http://16.170.162.36:8001/login`, loginData);
   };
 
 

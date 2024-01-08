@@ -5,7 +5,7 @@ import { useFonts } from 'expo-font';
 
 // Navigation Imports
 import { NavigationContainer } from '@react-navigation/native';
-import StackNavigator from './src/screens/index'
+import Screen from './src/screens/index'
 
 // Redux
 import { Provider } from "react-redux";
@@ -21,7 +21,6 @@ export default function App() {
   const [fontsLoaded] = useFonts({
     "Jost-Italic-VariableFont": require("./assets/fonts/Jost-Italic-VariableFont_wght.ttf"),
     "Jost-VariableFont": require("./assets/fonts/Jost-VariableFont_wght.ttf"),
-
 
     "Os_Condensed-medium": require("./assets/fonts/OpenSans_Condensed-Medium.ttf"),
     "Os_Condensed-regular": require("./assets/fonts/OpenSans_Condensed-Regular.ttf"),
@@ -45,11 +44,8 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      {/* <NavigationContainer > */}
-        <StackNavigator />
-
-      {/* </NavigationContainer> */}
-     </Provider>
+      <Screen />
+    </Provider>
   );
 }
 

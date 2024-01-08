@@ -28,7 +28,7 @@ const Reels = () => {
       }, [])
     );
 
-    console.log("smhvdajs",SetReelPageActive)
+    console.log("isReelPage:-",SetReelPageActive)
     return (
   
         <View style={{

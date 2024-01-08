@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
-import { signUp } from "../../schema/signUp";
+import { signUp } from "../../schema/signUpSchema";
 
 import { theme, typographyStyles } from "../../constants";
 
@@ -138,9 +138,9 @@ const Login = () => {
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="First Name"
-                                                    autoComplete="name"
+                                                    // autoComplete="name"
                                                     keyboardType="firstname"
-                                                    autoCapitalize="none"
+                                                    // autoCapitalize="none"
                                                     onChangeText={handleChange("firstname")}
                                                     onBlur={handleBlur("firstname")}
                                                     value={values.firstname}
@@ -164,9 +164,9 @@ const Login = () => {
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Last Name"
-                                                    autoComplete="name"
+                                                    // autoComplete="name"
                                                     keyboardType="lastname"
-                                                    autoCapitalize="none"
+                                                    // autoCapitalize="none"
                                                     onChangeText={handleChange("lastname")}
                                                     onBlur={handleBlur("lastname")}
                                                     value={values.lastname}
@@ -179,7 +179,7 @@ const Login = () => {
                                         </View>
 
                                         {/* lastname  end*/}
-                                        {/* <View style={styles.inputContainer}>
+                                        <View style={styles.inputContainer}>
 
 
                                             <View
@@ -191,9 +191,9 @@ const Login = () => {
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="age"
-                                                    autoComplete="ae"
+                                                    // autoComplete="age"
                                                     keyboardType="age"
-                                                    autoCapitalize="none"
+                                                    // autoCapitalize="none"
                                                     onChangeText={handleChange("age")}
                                                     onBlur={handleBlur("age")}
                                                     value={values.age}
@@ -203,7 +203,7 @@ const Login = () => {
                                             {(errors.age && touched.age) && (
                                                 <ErrorMessage>{errors.age}</ErrorMessage>
                                             )}
-                                        </View> */}
+                                        </View>
 
                                         <View style={styles.inputContainer}>
 
@@ -217,9 +217,9 @@ const Login = () => {
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Gender"
-                                                    autoComplete="gender"
+                                                    // autoComplete="gender"
                                                     keyboardType="email-address"
-                                                    autoCapitalize="none"
+                                                    // autoCapitalize="none"
                                                     onChangeText={handleChange("gender")}
                                                     onBlur={handleBlur("gender")}
                                                     value={values.gender}
@@ -264,28 +264,7 @@ const Login = () => {
                                         </View> */}
 
 
-                                        <View style={styles.inputContainer}>
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${touched.dob && errors.dob ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Date Of Birth"
-                                                    // autoCapitalize="none"
-                                                    // secureTextEntry
-                                                    // onChangeText={handleChange("dob")}   
-                                                    value={values.dob}
-                                                    style={{ color: "black" }}
-                                                />
-                                                
-                                            </View>
-                                            {touched.dob && errors.dob && (
-                                                <ErrorMessage>{errors.dob}</ErrorMessage>
-                                            )}
-                                        </View>
+                                       
 
 
                                         <View style={styles.inputContainer}>
@@ -328,7 +307,6 @@ const Login = () => {
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Phone Number"
                                                     autoComplete="Phone"
-
                                                     keyboardType="phone-pad"
                                                     autoCapitalize="none"
                                                     onChangeText={handleChange("phone_number")}
@@ -356,7 +334,6 @@ const Login = () => {
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Password"
-                                                    // autoCapitalize="none"
                                                     secureTextEntry
                                                     onChangeText={handleChange("password")}
                                                     value={values.password}
@@ -402,7 +379,7 @@ const Login = () => {
                                             // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
                                             bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
                                         >
-                                            Create Account
+                                             Don’t have an account? Sign up
                                         </Button>
 
 

@@ -10,11 +10,8 @@ import { GetVideosDataAPI } from '../utils/API_Calls'
 
 const ReelsComponent = ({ isReelPage }) => {
 
-
-
     const [currentIndex, setCurrentIndex] = useState(0);
     const [playVideo, setPlayVideo] = useState(0);
-
 
 
     const [videoData, setvideoData] = useState([])
@@ -36,13 +33,7 @@ const ReelsComponent = ({ isReelPage }) => {
         try {
             const res = await GetVideosDataAPI(tokenn)
             var Data=res.data.data
-     
             setvideoData((prevItems) => [...prevItems, ...Data]);
-            
-            
-            // console.log("Saved Or not", videoData)
-            // console.log("Saved Or not", videoData[0].videoId)
-
             setSpinnerbool(false)
         }
         catch (error) {
@@ -76,13 +67,11 @@ const ReelsComponent = ({ isReelPage }) => {
 
     const handleEndReached = () => {
         GetVideos()
-       
       };
 
 
     const handleChangeIndexValue = ({ index }) => {
         setCurrentIndex(index)
-        // console.log("Index of play ", index)
     }
 
     return (
@@ -90,24 +79,19 @@ const ReelsComponent = ({ isReelPage }) => {
             vertical={true}
             data={videoData}
             onChangeIndex={handleChangeIndexValue}
-            // onMomentumScrollEnd={()=>{console.error("ipoyindhi ra waste fellow")}}
+            // onMomentumScrollEnd={handleEndReached()}
             onEndReached={() =>{handleEndReached()}}
             onEndReachedThreshold={0.1}
-
             // loadMinimal
-            // loadMinimalSize={1}
+            loadMinimalSize={5}
             renderItem={({ item, index }) => (
                 <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} tokenn={tokenn}/>
             )}
             keyExtractor={(item, index) => index.toString()}
             // keyExtractor={(item, index) => index}
-
             loop={true}
-
-
             pagingEnabled
-            decelerationRate={0.9}
-
+            decelerationRate={0.1}
         />
 
 

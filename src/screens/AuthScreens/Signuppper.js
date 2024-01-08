@@ -18,7 +18,7 @@ import { useNavigation } from '@react-navigation/native';
 import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
 import { Formik } from "formik";
-import { signUp } from "../../schema/signUp";
+import { signUp } from "../../schema/signUpSchema";
 
 import { theme, typographyStyles } from "../../constants";
 
@@ -41,7 +41,8 @@ const Login = () => {
             const { email, password } = user;
             // navigation.navigate('Reels');
 
-
+            console.log(email, " > ", password)
+            
             const res = await UserLoginApi(email, password)
             if (res) {
                 setLoading(false);
@@ -68,7 +69,7 @@ const Login = () => {
         }
 
     }
-    
+
 
     return (
         <>
@@ -110,7 +111,7 @@ const Login = () => {
 
 
                             <Formik
-                                initialValues={{ firstname: "", lastname: "", age: "", gender: "", email: "", phone_number: "", password: "", dob: "" }}
+                                initialValues={{ firstname: "", lastname: "", age: "", gender: "", email: "", phone_number: "", password: "", }}
                                 onSubmit={submitHandler}
                                 validationSchema={signUp}
                             >
@@ -125,9 +126,9 @@ const Login = () => {
                                 }) => (
                                     <>
                                         {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
-                              
 
-                                       
+
+
 
                                         <View style={styles.inputContainer}>
 
@@ -204,7 +205,7 @@ const Login = () => {
                                                     value={values.dob}
                                                     style={{ color: "black" }}
                                                 />
-                                                
+
                                             </View>
                                             {touched.dob && errors.dob && (
                                                 <ErrorMessage>{errors.dob}</ErrorMessage>
@@ -212,7 +213,7 @@ const Login = () => {
                                         </View>
 
 
-                                    
+
 
                                         <Button
                                             activeOpacity={0.5}
