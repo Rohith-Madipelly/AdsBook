@@ -1,3 +1,5 @@
+
+import React, { useState } from "react";
 import {
     Keyboard,
     KeyboardAvoidingView,
@@ -10,69 +12,125 @@ import {
     TouchableWithoutFeedback,
     Image,
     ImageBackground,
-
 } from "react-native";
-
-import { useNavigation } from '@react-navigation/native';
-
-import React, { useState } from "react";
 import { StatusBar } from "expo-status-bar";
+
+
 import { Formik } from "formik";
-import { signUp } from "../../schema/signUpSchema";
+import { loginSchema } from "../../schema/signIn";
 
 import { theme, typographyStyles } from "../../constants";
-
-// import Loader from "../../screenComponents/Shared/Loader/Loader";
-import Loader from "../../screenComponents/Shared/Loader/Loader";
-// import { ErrorMessage, Button } from "../screenComponents/Auth";
 import { ErrorMessage, Button } from "../../screenComponents/Auth";
+import { ToasterSender } from '../../utils/Toaster'
 
-import { UserLoginApi } from "../../utils/Apis";
+import { UserLoginApi, UserRegisterApi } from "../../utils/API_Calls";
+import Spinner from 'react-native-loading-spinner-overlay';
+import { useNavigation } from '@react-navigation/native';
 
-const Login = () => {
+// redux
+import { useDispatch } from 'react-redux';
+import { setToken } from '../../redux/actions/loginAction'
+
+
+import ASO from '../../utils/AsyncStorage_Calls'
+import { signupSchema } from "../../schema/signUpSchema";
+import { Picker } from "@react-native-picker/picker";
+
+const Register = () => {
+
+    const [spinnerBool, setSpinnerbool] = useState(false)
     const [loading, setLoading] = useState(false)
     const [error, setError] = useState("")
+
     const navigation = useNavigation();
+
+    const dispatch = useDispatch();
 
     const submitHandler = async (user) => {
 
         setLoading(true);
+
         try {
-            const { email, password } = user;
-            // navigation.navigate('Reels');
-
-
-            const res = await UserLoginApi(email, password)
+            const { fName, lName, userAge, userGender, email, phoneNo, password } = user;
+            console.log(user)
+            setSpinnerbool(true)
+            const res = await UserRegisterApi(fName, lName,userAge, userGender,email, phoneNo,password)
             if (res) {
-                setLoading(false);
+                const Message = res.data.message
+                const token = res.data.token
 
-                console.log(res.data.Token)
+                ASO.setTokenJWT("Token", JSON.stringify(res.data.token), function (res, status) {
+                    if (status) {
+                        // console.warn(status, " status>>>>>.")
+                        ToasterSender({ Message: `${Message}` })
+                        dispatch(setToken(token));
+                    }
+                })
+
                 setTimeout(() => {
                     setLoading(false);
-                    navigation.navigate('Reels');
-                }, 1000);
+                    setSpinnerbool(false)
+                }, 50);
+
+
             }
-            // console.log(email, " > ", password)
 
+        } catch (error) {
+            if (error.response) {
+                if (error.response.status === 400) {
+                    console.log("Error With 400.")
+                }
+                else if (error.response.status === 401) {
+                    console.log("Password is wrong", error.message)
+                    setError("Password is wrong")
+                }
+                else if (error.response.status === 500) {
+                    console.log("Internal Server Error", error.message)
+                }
+                else {
+                    console.log("An error occurred response.")
+                }
+            }
+            else if (error.request) {
+                console.log("No Response Received From the Server.")
+            }
+            else {
+                console.log("Error in Setting up the Request.")
+            }
 
-        } catch (err) {
+            ToasterSender("Error in Setting up the Request.")
+            ToasterSender({ Message: error.response.data.message })
+            // ToasterSender({ Message: error })
+
+            setSpinnerbool(false)
 
             let message = "Failed to create user.";
 
-            if (err) {
-                // message = err.message;
-            }
-            // setError(message);
-        } finally {
-            setLoading(false);
-        }
+            if (error) {
+                console.log(error.response.data.message)
+                // message = error.message;
+                // setError(message)
 
+            }
+        }
+        finally {
+            setLoading(false);
+            setSpinnerbool(false)
+        }
     }
-    
+
 
     return (
         <>
-            {loading && <Loader />}
+            {/* {loading && <Loader />} */}
+
+            <Spinner
+                visible={spinnerBool}
+                color={"#5F2404"}
+                animation={'fade'}
+            />
+
+
             <ImageBackground
                 source={require('../../../assets/BgImgs/Bg.png')} // Replace with the actual path to your image
                 style={styles.containerImageBackground}
@@ -99,20 +157,13 @@ const Login = () => {
 
 
 
-                            {/* <Image
-                  source={require("../../assets/logoImgs/LogoModel.png")}
-                  style={styles.image}
-                />
-                <Image
-                  source={require("../../assets/logoImgs/LogoName.png")}
-                  style={styles.image}
-                /> */}
-
-
                             <Formik
-                                initialValues={{ firstname: "", lastname: "", age: "", gender: "", email: "", phone_number: "", password: "", dob: "" }}
+
+                                // initialValues={{ fName: "", lName: "", userAge: "", userGender: "", email: "", phoneNo: "", password: "" }}
+                                initialValues={{ fName: "Rohith", lName: "Madipelly", userAge: "23", userGender: "", email: "madipellyrohith.123@gmail.com", phoneNo: "9951072125", password: "Rohith@7" }}
+
                                 onSubmit={submitHandler}
-                                validationSchema={signUp}
+                                validationSchema={signupSchema}
                             >
                                 {({
                                     handleChange,
@@ -124,152 +175,123 @@ const Login = () => {
                                     isValid,
                                 }) => (
                                     <>
-                                        {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
-                                        {/* firstname*/}
+
+
+
+
+
+                                        {/* First Name */}
                                         <View style={styles.inputContainer}>
-
-
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(errors.firstname && touched.firstname) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.fName && touched.fName) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="First Name"
-                                                    // autoComplete="name"
-                                                    keyboardType="firstname"
+                                                    // autoComplete="email"
+                                                    // keyboardType="email-address"
                                                     // autoCapitalize="none"
-                                                    onChangeText={handleChange("firstname")}
-                                                    onBlur={handleBlur("firstname")}
-                                                    value={values.firstname}
+                                                    onChangeText={handleChange("fName")}
+                                                    onBlur={handleBlur("fName")}
+                                                    value={values.fName}
                                                     style={{ color: "black" }}
                                                 />
                                             </View>
-                                            {(errors.firstname && touched.firstname) && (
-                                                <ErrorMessage>{errors.firstname}</ErrorMessage>
-                                            )}
+
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.fName && touched.fName) && (
+                                                    <ErrorMessage>{errors.fName}</ErrorMessage>
+                                                )}
+                                            </View>
                                         </View>
-                                        {/* lastname */}
+
+                                        {/* Last Name */}
                                         <View style={styles.inputContainer}>
-
-
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(errors.firstname && touched.firstname) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.lName && touched.lName) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Last Name"
-                                                    // autoComplete="name"
-                                                    keyboardType="lastname"
+                                                    // autoComplete="email"
+                                                    // keyboardType="email-address"
                                                     // autoCapitalize="none"
-                                                    onChangeText={handleChange("lastname")}
-                                                    onBlur={handleBlur("lastname")}
-                                                    value={values.lastname}
+                                                    onChangeText={handleChange("lName")}
+                                                    onBlur={handleBlur("lName")}
+                                                    value={values.lName}
                                                     style={{ color: "black" }}
                                                 />
                                             </View>
-                                            {(errors.lastname && touched.lastname) && (
-                                                <ErrorMessage>{errors.lastname}</ErrorMessage>
-                                            )}
-                                        </View>
 
-                                        {/* lastname  end*/}
-                                        <View style={styles.inputContainer}>
-
-
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.age && touched.age) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="age"
-                                                    // autoComplete="age"
-                                                    keyboardType="age"
-                                                    // autoCapitalize="none"
-                                                    onChangeText={handleChange("age")}
-                                                    onBlur={handleBlur("age")}
-                                                    value={values.age}
-                                                    style={{ color: "black" }}
-                                                />
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.lName && touched.lName) && (
+                                                    <ErrorMessage>{errors.lName}</ErrorMessage>
+                                                )}
                                             </View>
-                                            {(errors.age && touched.age) && (
-                                                <ErrorMessage>{errors.age}</ErrorMessage>
-                                            )}
                                         </View>
 
+                                        {/* Gender */}
                                         <View style={styles.inputContainer}>
-
-
                                             <View
                                                 style={[
-                                                    styles.input,
-                                                    { borderColor: `${(errors.gender && touched.gender) ? "red" : "#ccc"}` },
+                                                    styles.input, { padding: 0, },
+                                                    { borderColor: `${(errors.userGender && touched.userGender) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Gender"
-                                                    // autoComplete="gender"
-                                                    keyboardType="email-address"
-                                                    // autoCapitalize="none"
-                                                    onChangeText={handleChange("gender")}
-                                                    onBlur={handleBlur("gender")}
-                                                    value={values.gender}
-                                                    style={{ color: "black" }}
-                                                />
-
-                                                {/* <Picker
-                                                    selectedValue={values.gender}
-                                                    onValueChange={itemValue => handleChange("gender")(itemValue)}
-                                                    style={{ color: "black" }}
+                                                <Picker
+                                                    // selectedValue={values.userGender}
+                                                    selectedValue={values.userGender}
+                                                    onValueChange={(itemValue) => handleChange("userGender")(itemValue)}
+                                                    style={{ height: 50, marginTop: -5, marginLeft: -5 }}
                                                 >
                                                     <Picker.Item label="Select Gender" value="" />
-                                                    <Picker.Item label="Female" value="female" />
                                                     <Picker.Item label="Male" value="male" />
-                                                </Picker> */}
+                                                    <Picker.Item label="Female" value="female" />
+                                                </Picker>
                                             </View>
-                                            {(errors.gender && touched.gender) && (
-                                                <ErrorMessage>{errors.gender}</ErrorMessage>
-                                            )}
+
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.userGender && touched.userGender) && (
+                                                    <ErrorMessage>{errors.userGender}</ErrorMessage>
+                                                )}
+                                            </View>
                                         </View>
-                                        {/* <View style={styles.inputContainer}>
+
+                                        {/* Users Age */}
+                                        <View style={styles.inputContainer}>
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(touched.dob && errors.dob) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.userAge && touched.userAge) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="Date Of Brith"
+                                                    placeholder="Age"
+                                                    // autoComplete="email"
+                                                    keyboardType="number-pad"
                                                     // autoCapitalize="none"
-                                                    // secureTextEntry
-                                                    onChangeText={handleChange("password")}
-                                                    value={values.dob}
+                                                    onChangeText={handleChange("userAge")}
+                                                    onBlur={handleBlur("userAge")}
+                                                    value={values.userAge}
                                                     style={{ color: "black" }}
-
                                                 />
                                             </View>
-                                            {(touched.dob && errors.dob) && (
-                                                <ErrorMessage>{errors.dob}</ErrorMessage>
-                                            )}
-                                        </View> */}
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.userAge && touched.userAge) && (
+                                                    <ErrorMessage>{errors.userAge}</ErrorMessage>
+                                                )}
+                                            </View>
+                                        </View>
 
-
-                                       
-
-
+                                        {/* Email Address */}
                                         <View style={styles.inputContainer}>
-
-
                                             <View
                                                 style={[
                                                     styles.input,
@@ -278,75 +300,52 @@ const Login = () => {
                                             >
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
-                                                    placeholder="User Email"
-                                                    autoComplete="email"
+                                                    placeholder="Email Address"
+                                                    // autoComplete="email"
                                                     keyboardType="email-address"
-                                                    autoCapitalize="none"
+                                                    // autoCapitalize="none"
                                                     onChangeText={handleChange("email")}
                                                     onBlur={handleBlur("email")}
                                                     value={values.email}
                                                     style={{ color: "black" }}
                                                 />
                                             </View>
-                                            {(errors.email && touched.email) && (
-                                                <ErrorMessage>{errors.email}</ErrorMessage>
-                                            )}
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.email && touched.email) && (
+                                                    <ErrorMessage>{errors.email}</ErrorMessage>
+                                                )}
+                                            </View>
                                         </View>
 
-
+                                        {/* Phone Number */}
                                         <View style={styles.inputContainer}>
-
-
                                             <View
                                                 style={[
                                                     styles.input,
-                                                    { borderColor: `${(errors.phone_number && touched.phone_number) ? "red" : "#ccc"}` },
+                                                    { borderColor: `${(errors.phoneNo && touched.phoneNo) ? "red" : "#ccc"}` },
                                                 ]}
                                             >
+                                                {/* phoneNo */}
                                                 <TextInput
                                                     placeholderTextColor={"#444"}
                                                     placeholder="Phone Number"
-                                                    autoComplete="Phone"
-                                                    keyboardType="phone-pad"
-                                                    autoCapitalize="none"
-                                                    onChangeText={handleChange("phone_number")}
-                                                    onBlur={handleBlur("phone_number")}
-                                                    value={values.phone_number}
+                                                    // autoComplete="email"
+                                                    keyboardType="numeric"
+                                                    // autoCapitalize="none"
+                                                    onChangeText={handleChange("phoneNo")}
+                                                    onBlur={handleBlur("phoneNo")}
+                                                    value={values.phoneNo}
                                                     style={{ color: "black" }}
-                                                    maxLength={10}
                                                 />
                                             </View>
-                                            {(errors.phone_number && touched.phone_number) && (
-                                                <ErrorMessage>{errors.phone_number}</ErrorMessage>
-                                            )}
-                                        </View>
-
-
-
-
-                                         <View>
-                                            <View
-                                                style={[
-                                                    styles.input,
-                                                    { borderColor: `${(touched.password && errors.password) ? "red" : "#ccc"}` },
-                                                ]}
-                                            >
-                                                <TextInput
-                                                    placeholderTextColor={"#444"}
-                                                    placeholder="Password"
-                                                    secureTextEntry
-                                                    onChangeText={handleChange("password")}
-                                                    value={values.password}
-                                                    style={{ color: "black" }}
-
-                                                />
+                                            <View style={{ marginLeft: 10 }}>
+                                                {(errors.phoneNo && touched.phoneNo) && (
+                                                    <ErrorMessage>{errors.phoneNo}</ErrorMessage>
+                                                )}
                                             </View>
-                                            {(touched.password && errors.password) && (
-                                                <ErrorMessage>{errors.password}</ErrorMessage>
-                                            )}
                                         </View>
 
-{/*
+                                        {/* Password */}
                                         <View>
                                             <View
                                                 style={[
@@ -365,10 +364,14 @@ const Login = () => {
 
                                                 />
                                             </View>
-                                            {(touched.password && errors.password) && (
-                                                <ErrorMessage>{errors.password}</ErrorMessage>
-                                            )}
-                                        </View> */}
+                                            <View style={{ marginLeft: 10 }}>
+
+                                                {(touched.password && errors.password) && (
+                                                    <ErrorMessage>{errors.password}</ErrorMessage>
+                                                )}
+                                                {error.length !== 0 && <ErrorMessage>{error}</ErrorMessage>}
+                                            </View>
+                                        </View>
 
                                         <Button
                                             activeOpacity={0.5}
@@ -379,8 +382,9 @@ const Login = () => {
                                             // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
                                             bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
                                         >
-                                             Don’t have an account? Sign up
+                                            Sign Up
                                         </Button>
+
 
 
                                         <View style={styles.ToLoginContainer}>
@@ -405,15 +409,9 @@ const Login = () => {
                                                 } onPress={() => navigation.navigate("Login")}>Login</Text>
                                             </Text>
                                         </View>
-
-
                                     </>
                                 )}
-
-
                             </Formik>
-
-
                         </View>
                     </TouchableWithoutFeedback>
                     <View>
@@ -425,7 +423,7 @@ const Login = () => {
     )
 }
 
-export default Login
+export default Register
 
 
 
@@ -469,6 +467,7 @@ const styles = StyleSheet.create({
         marginBottom: 12,
 
     },
+
     input: {
         width: 300,
         // backgroundColor: "#121212",
@@ -497,6 +496,11 @@ const styles = StyleSheet.create({
         color: "#3797EF",
         marginLeft: 5.5,
         fontWeight: "600",
+    },
+    forgotPasswordContainer: {
+        alignItems: "flex-end",
+        marginVertical: 15,
+        paddingHorizontal: 10,
     },
     ToLoginContainer: {
         alignItems: "center",

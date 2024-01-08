@@ -11,8 +11,25 @@ export const UserLoginApi = async (email, password) => {
       password: password
     };
   
-    return await axios.post(`http://16.170.162.36:8001/login`, loginData);
+    return await axios.post(`${GUEST_URL}/login`, loginData);
   };
+
+
+
+  // User Registertion API Call 
+export const UserRegisterApi = async (fName, lName,userAge, userGender,email, phoneNo,password) => {
+  const loginData = {
+    firstname:fName,
+    lastname:lName,
+    age:userAge,
+    gender:userGender,
+    email: email,
+    phone_number:phoneNo,
+    password: password
+  };
+
+  return await axios.post(`${GUEST_URL}/register`, loginData);
+};
 
 
 

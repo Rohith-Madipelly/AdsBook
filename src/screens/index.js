@@ -4,13 +4,13 @@ import { useState, useMemo, useEffect } from "react";
 import Welcome from "./Welcome";
 
 import Login from "./AuthScreens/Login";
-import Register from "./AuthScreens/NewSign";
-// import Register from "./AuthScreens/Register";
-// import Register from "./AuthScreens/Signuppper";
+
+import Register from "./AuthScreens/Register";
+
 import Forgot from "./AuthScreens/Forgot";
 import OtpScreen from "./AuthScreens/OtpScreen";
 
-import New from "./AuthScreens/New";
+import New from "./AuthScreens/DateTimePicker";
 
 import RestPassword from "./AuthScreens/RestPassword";
 import BottomTabScreen from '../Navigations/BottomTabScreen'
