@@ -1,24 +1,20 @@
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { useState, useMemo, useEffect } from "react";
 
-import Welcome from "./Welcome";
-
-import Login from "./AuthScreens/Login";
-
-import Register from "./AuthScreens/Register";
-
-import Forgot from "./AuthScreens/Forgot";
-import OtpScreen from "./AuthScreens/OtpScreen";
-
-import New from "./AuthScreens/DateTimePicker";
-
-import RestPassword from "./AuthScreens/RestPassword";
-import BottomTabScreen from '../Navigations/BottomTabScreen'
-
 import ASO from "../utils/AsyncStorage_Calls";
-
 import { useSelector, useDispatch } from "react-redux";
 import { setToken } from '../../src/redux/actions/loginAction'
+
+import Login from "./AuthScreens/Login";
+import Register from "./AuthScreens/Register";
+import Forgot from "./AuthScreens/Forgot";
+import OtpScreen from "./AuthScreens/OtpScreen";
+import RestPassword from "./AuthScreens/RestPassword";
+
+import DateTimePicker from "./AuthScreens/DateTimePicker";
+
+
+import BottomTabScreen from '../Navigations/BottomTabScreen';
 import Profile from "./MainScreens/Profiles/Profile";
 import Password from "./MainScreens/Profiles/ChangePassword";
 import Notifications from "./MainScreens/Profiles/Notifications";
@@ -28,8 +24,6 @@ import PrivacyPolicy from "./MainScreens/Profiles/PrivacyPolicy";
 import ShareApp from "./MainScreens/Profiles/ShareApp";
 import Help from "./MainScreens/Profiles/Help";
 
-
-import Checker from "./Checker";
 
 import { NavigationContainer } from "@react-navigation/native";
 import { Text, View } from "react-native";
@@ -64,7 +58,6 @@ export default function Screens() {
     const fetchData = async () => {
       await verifyToken();
     };
-  
     fetchData();
   }, []);
   
@@ -72,8 +65,6 @@ export default function Screens() {
   useEffect(() => {
     setUser(loginSelector)
   }, [loginSelector])
-
-
 
 
   return (
@@ -86,10 +77,6 @@ export default function Screens() {
         <Stack.Group >
           {user ? (
             <>
-              {/* <Stack.Screen name="Login" component={Login} /> */}
-              {/* <Stack.Screen name="ProfileProfile" component={Profile} /> */}
-              {/* <Stack.Screen name="ProfileProfile" component={Checker} /> */}
-
               <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
               <Stack.Screen name="ProfileProfile" component={Profile} />
               <Stack.Screen name="ProfilePassword" component={Password} />
@@ -102,6 +89,7 @@ export default function Screens() {
             </>
           ) : (
             <>
+              {/* <Stack.Screen name="Welcome" component={Welcome} /> */}
               <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="ForgotPassword" component={Forgot} />

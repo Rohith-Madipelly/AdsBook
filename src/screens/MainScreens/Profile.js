@@ -1,4 +1,4 @@
-import { Text, StyleSheet, ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert } from 'react-native'
+import { Text, StyleSheet, ImageBackground, View, ScrollView, Image, TouchableOpacity, Alert, Platform } from 'react-native'
 import React, { Component, useEffect, useState } from 'react'
 import { Button } from '../../screenComponents/Auth'
 import { useDispatch, useSelector } from "react-redux";
@@ -8,13 +8,31 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { UserGetProfileDetails } from '../../utils/API_Calls'
+import { OpenStore } from '../../utils/OpenStore';
+import onShare from '../../screenComponents/ShareBtn';
+import { AppLinkAndroid } from '../../Enviornment';
+import { AppLinkIOS } from '../../Enviornment';
 const Profile = () => {
   const [spinnerBool, setSpinnerbool] = useState(false)
   const [UserName, setUserName] = useState("")
   const [StartingLetter, setStartingLetter] = useState("")
   const [profilepic, setProfilepic] = useState(null)
+  const [appLink, setAppLink] = useState()
   const dispatch = useDispatch();
   let tokenn = useSelector((state) => state.token);
+
+
+
+const PlatformChecker=()=>{
+  if (Platform.OS !== 'ios') {
+    setAppLink(AppLinkAndroid)
+  } else {
+    setAppLink(AppLinkIOS)
+  }
+
+}
+
+
 
   try {
     if (tokenn != null) {
@@ -27,6 +45,7 @@ const Profile = () => {
 
   useEffect(() => {
     ProfileNameKosam()
+    PlatformChecker()
   }, [])
 
   const ProfileNameKosam = async () => {
@@ -305,7 +324,9 @@ const Profile = () => {
               {/* Rate & Review tab */}
               <View style={{ marginBottom: 10 }}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("ProfileRateAndReview") }}>
+                <TouchableOpacity activeOpacity={0.6} onPress={OpenStore
+                  // () => { navigation.navigate("ProfileRateAndReview") }
+                  }>
 
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
@@ -367,8 +388,9 @@ const Profile = () => {
 
               <View style={{ marginBottom: 10 }}>
 
-                <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("ProfileShareApp") }}>
-
+                {/* <TouchableOpacity activeOpacity={0.6} onPress={() => { navigation.navigate("ProfileShareApp") }}> */}
+                <TouchableOpacity activeOpacity={0.6} onPress={() => {  onShare(appLink) }}>
+                {/* onShare */}
 
                   <View style={{ display: 'flex', flexDirection: 'row', justifyContent: 'space-between', marginBottom: 15 }}>
 
@@ -376,7 +398,7 @@ const Profile = () => {
 
                       <View>
                         <Image style={{ width: 24, height: 24, }}
-                          source={require("../../../assets/utilsImages/ProfileLogos/share-all-outline.png")}
+                          source={require("../../../assets/utilsImages/ProfileLogos/share-all-outline.png")} 
                           resizeMode={"contain"} />
                       </View>
 

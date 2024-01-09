@@ -445,17 +445,61 @@ const Profile = () => {
                 </KeyboardAvoidingView>
 
 
-        {/* <View style={{ padding: 20 }}>
-     
-        </View> */}
-        {/* <Text>{editToggle.toString()}</Text>
+        <View style={{ padding: 20 }}>
+          <View
+            style={[
+              styles.input,
+              // { borderColor: `${(errors.fName && touched.fName) ? "red" : "#ccc"}` },
+              { borderColor: `${(true) ? "red" : "#ccc"}` },
+            ]}
+          >
+            <TextInput
+              placeholderTextColor={"#444"}
+              placeholder="First Name"
+              // autoComplete="email"
+              // keyboardType="email-address"
+              // autoCapitalize="none"
+              onChangeText={e => { setUserEmail(e) }}
+              // onBlur={handleBlur("fName")}
+              // value={values.fName}
+
+              value={UserEmail}
+              editable={editToggle ? true : false}
+              style={{ color: "black" }}
+            />
+          </View>
+
+          <View
+            style={[
+              styles.input,
+              // { borderColor: `${(errors.fName && touched.fName) ? "red" : "#ccc"}` },
+              { borderColor: `${(true) ? "red" : "#ccc"}` },
+            ]}
+          >
+            <TextInput
+              placeholderTextColor={"#444"}
+              placeholder="First Name"
+              // autoComplete="email"
+              // keyboardType="email-address"
+              // autoCapitalize="none"
+              onChangeText={e => { setUserEmail(e) }}
+              // onBlur={handleBlur("fName")}
+              // value={values.fName}
+
+              value={UserEmail}
+              editable={editToggle ? true : false}
+              style={{ color: "black" }}
+            />
+          </View>
+        </View>
+        <Text>{editToggle.toString()}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Name </Text> : {UserName}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Email </Text> : {UserEmail}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Phone Number </Text> : {UserPhone}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Date of Birth </Text> : {UserDOB}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Age </Text> : {age}</Text>
         <Text style={styles.TextUR}><Text style={styles.TextGS}>Gender </Text> : {gender}</Text>
-        <Text style={styles.TextUR}><Text style={styles.TextGS}>Wallet </Text> : {Wallet}</Text> */}
+        <Text style={styles.TextUR}><Text style={styles.TextGS}>Wallet </Text> : {Wallet}</Text>
 
       </View>
 

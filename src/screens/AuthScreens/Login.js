@@ -155,16 +155,20 @@ const Login = () => {
 
 
               <Formik
-
+                // enableReinitialize
+                validateOnMount={true}
                 initialValues={{ email: "", password: "" }}
 
+                // onSubmit={submitHandler}
                 onSubmit={submitHandler}
+                validator={() => ({})}
                 validationSchema={loginSchema}
               >
                 {({
                   handleChange,
                   handleBlur,
                   handleSubmit,
+                  isSubmitting,
                   values,
                   touched,
                   errors,
