@@ -27,6 +27,10 @@ import RateReview from "./MainScreens/Profiles/Rate&Review";
 import PrivacyPolicy from "./MainScreens/Profiles/PrivacyPolicy";
 import ShareApp from "./MainScreens/Profiles/ShareApp";
 import Help from "./MainScreens/Profiles/Help";
+
+
+import Checker from "./Checker";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { Text, View } from "react-native";
 
@@ -74,7 +78,8 @@ export default function Screens() {
 
   return (
     <NavigationContainer >
-      <Stack.Navigator initialRouteName={user ? 'Bottom-navigator' : 'Register'}
+      <Stack.Navigator 
+      // initialRouteName={user ? 'Bottom-navigator' : 'Register'}
         screenOptions={{
           headerShown: false
         }}>
@@ -82,6 +87,9 @@ export default function Screens() {
           {user ? (
             <>
               {/* <Stack.Screen name="Login" component={Login} /> */}
+              {/* <Stack.Screen name="ProfileProfile" component={Profile} /> */}
+              {/* <Stack.Screen name="ProfileProfile" component={Checker} /> */}
+
               <Stack.Screen name="Bottom-navigator" component={BottomTabScreen} />
               <Stack.Screen name="ProfileProfile" component={Profile} />
               <Stack.Screen name="ProfilePassword" component={Password} />
@@ -94,7 +102,7 @@ export default function Screens() {
             </>
           ) : (
             <>
-              {/* <Stack.Screen name="Login" component={Login} /> */}
+              <Stack.Screen name="Login" component={Login} />
               <Stack.Screen name="Register" component={Register} />
               <Stack.Screen name="ForgotPassword" component={Forgot} />
               <Stack.Screen name="OtpScreen" component={OtpScreen} />
