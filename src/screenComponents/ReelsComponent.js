@@ -33,6 +33,7 @@ const ReelsComponent = ({ isReelPage }) => {
         try {
             const res = await GetVideosDataAPI(tokenn)
             var Data=res.data.data
+            console.log("Chech>>>.",Data)
             setvideoData((prevItems) => [...prevItems, ...Data]);
             setSpinnerbool(false)
         }
@@ -81,17 +82,17 @@ const ReelsComponent = ({ isReelPage }) => {
             onChangeIndex={handleChangeIndexValue}
             // onMomentumScrollEnd={handleEndReached()}
             onEndReached={() =>{handleEndReached()}}
-            onEndReachedThreshold={0.1}
+            onEndReachedThreshold={0.33}
             // loadMinimal
-            loadMinimalSize={5}
+            loadMinimalSize={15}
             renderItem={({ item, index }) => (
                 <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} tokenn={tokenn}/>
             )}
-            keyExtractor={(item, index) => index.toString()}
-            // keyExtractor={(item, index) => index}
+            // keyExtractor={(item, index) => index.toString()}
+            keyExtractor={(item, index) => index}
             loop={true}
             pagingEnabled
-            decelerationRate={0.1}
+            decelerationRate={0.9}
         />
 
 

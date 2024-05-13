@@ -21,9 +21,9 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
       videoRef.current.replayAsync();
       PlayVideo()
     }
-    // else if (currentIndex != index) {
-    //   PauseVideo()
-    // }
+    else if (currentIndex != index) {
+      PauseVideo()
+    }
 
     else {
       PauseVideo()
@@ -96,7 +96,15 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
       const res = await rewardedAPI(dateVideorewardedAPI,tokenn)
       if (res) {
         const Message = res.data.message
+   
+        if(res.status===201){
+
+        }
+        else{
+
         ToasterSender({ Message: `${Message}` })
+
+        }
       }
   
     } catch (error) {
@@ -124,7 +132,7 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
   
     }
   }
-  const dateVideorewardedAPI=item.videoId;
+  const dateVideorewardedAPI=item._id;
   const Rewarder = async () => {
     HitAPi()
   }
@@ -193,15 +201,16 @@ const ReelSingle = ({ item, index, currentIndex, play,tokenn }) => {
           {/* <Text>{item.videoId}</Text> */}
           <View>
 
+            
             {/* <ReelDescription description={item.description} /> */}
-            <ReelDescription description={" "} />
-            {/* <Text>uasgdfuf</Text> */}
+           
             <ReelsBtns
               isLiked={item.liked}
               likes={item.likes}
               shares={item.shares}
               comments={item.comments}
-              dateVideorewardedAPI={dateVideorewardedAPI}
+              dateVideoId={dateVideorewardedAPI}
+              urlLink={ `${AWSBaseUrl}/${item.videoUrl}` }
             // UploaderthumbnailUrl="https://ezewin-files.s3.ap-south-1.amazonaws.com/MTU1XzE3MDI0NjU2MTExOThfNjgz.jpeg"
             // index={currentIndex}
             />

@@ -30,7 +30,7 @@ import { Text, View } from "react-native";
 
 
 export default function Screens() {
-  const [user, setUser] = useState(true)
+  const [user, setUser] = useState()
   const Stack = createNativeStackNavigator();
   const dispatch = useDispatch();
 

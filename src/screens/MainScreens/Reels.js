@@ -28,7 +28,7 @@ const Reels = () => {
       }, [])
     );
 
-    console.log("isReelPage:-",SetReelPageActive)
+    // console.log("isReelPage:-",SetReelPageActive)
     return (
   
         <View style={{
@@ -51,10 +51,10 @@ const Reels = () => {
                 zIndex: 1,
                 padding: 10,
             }}>
-                <Text style={{
+                {/* <Text style={{
                     fontSize: 20, fontWeight: 'bold',
                     // color: 'white' 
-                }}>Reels</Text>
+                }}>Reels</Text> */}
                 {/* <Feather name="camera" style={{
                     fontSize: 25,
                     // color: 'white'

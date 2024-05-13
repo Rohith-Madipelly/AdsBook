@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import * as SplashScreen from 'expo-splash-screen';
-
+// import NetInfo from '@react-native-community/netinfo';
 import { useFonts } from 'expo-font';
 
 // Navigation Imports
@@ -11,7 +11,7 @@ import Screen from './src/screens/index'
 import { Provider } from "react-redux";
 import { store } from './src/redux/store';
 import BottomTabScreen from './src/Navigations/BottomTabScreen';
-
+import Screens from './src/screens/index';
 
 SplashScreen.preventAutoHideAsync();
 
@@ -35,6 +35,7 @@ export default function App() {
     }
     loadFont();
   }, [fontsLoaded]);
+  
 
   if (!fontsLoaded) {
     return null;
@@ -44,7 +45,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <Screen />
+      <Screens />
     </Provider>
   );
 }

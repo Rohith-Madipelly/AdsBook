@@ -30,19 +30,19 @@ const ReelDescription = ({
     // const [liked, setLiked] = useState(isLiked);
 
     return (
-        <View style={styles.container}>
+        <View style={[styles.container,{marginBottom:8}]}>
 
             <TouchableOpacity style={styles.btn2}>
                 
                 {/* <Image source={{ uri: UploaderthumbnailUrl }} style={styles.image} /> */}
                 <View>
-                <Text style={styles.textUpper} >Description {description}</Text>
-                    <Text style={styles.text} 
+                <Text style={styles.textUpper} >{description}</Text>
+                    {/* <Text style={styles.text} 
                     onPress={() => Linking.openURL(description)}
                     >
-                        {/* {description}  */}
+                        //  {description} 
                         Click here for Location
-                    </Text>
+                    </Text> */}
                 </View>
 
             </TouchableOpacity>
@@ -70,7 +70,7 @@ const styles = StyleSheet.create({
     },
     textUpper: {
         color: "#fff",
-        marginTop: 6,
+        marginTop: 2,
         fontWeight: "400",
         fontSize: 14,
 

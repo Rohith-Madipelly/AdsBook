@@ -6,6 +6,7 @@ import Ionic from 'react-native-vector-icons/Ionicons';
 import Home from '../screens/MainScreens/Home';
 import Wallet from '../screens/MainScreens/Wallet';
 import Reels from '../screens/MainScreens/Reels';
+import Reels2 from '../screens/MainScreens/Reels copy';
 import Profile from '../screens/MainScreens/Profile';
 
 
@@ -50,8 +51,8 @@ const BottomTabScreen = ({ route }) => {
       }
     })}>
 
-      <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} />
-      <Tab.Screen name="Reels" component={Reels} options={{ headerShown: false }} />
+      {/* <Tab.Screen name="Home" component={Home} options={{ headerShown: false }} /> */}
+      <Tab.Screen name="Reels" component={Reels2} options={{ headerShown: false }} />
 
       <Tab.Screen name="Wallet" component={Wallet} options={{
           headerShown: true, // Show the header

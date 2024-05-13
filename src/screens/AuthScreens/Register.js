@@ -16,6 +16,7 @@ import {
 import { StatusBar } from "expo-status-bar";
 
 
+
 import { Formik } from "formik";
 import { loginSchema } from "../../schema/signIn";
 
@@ -159,8 +160,8 @@ const Register = () => {
 
                             <Formik
 
-                                // initialValues={{ fName: "", lName: "", userAge: "", userGender: "", email: "", phoneNo: "", password: "" }}
-                                initialValues={{ fName: "Rohith", lName: "Madipelly", userAge: "23", userGender: "", email: "madipellyrohith.123@gmail.com", phoneNo: "9951072125", password: "Rohith@7" }}
+                                initialValues={{ fName: "", lName: "", userAge: "", userGender: "", email: "", phoneNo: "", password: "" }}
+                                // initialValues={{ fName: "Rohith", lName: "Madipelly", userAge: "23", userGender: "", email: "madipellyrohith.123@gmail.com", phoneNo: "9951072125", password: "Rohith@7" }}
 
                                 onSubmit={submitHandler}
                                 validationSchema={signupSchema}
