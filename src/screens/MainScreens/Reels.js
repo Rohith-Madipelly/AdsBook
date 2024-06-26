@@ -37,7 +37,7 @@ const Reels = () => {
             height: windowHeight,
             // backgroundColor: 'black'
         }}>
-      <StatusBar style="auto" />
+      <StatusBar style="light" />
 
             {/* Reels Header */}
             

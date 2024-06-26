@@ -1,4 +1,4 @@
-import { View, Text, StyleSheet, ImageBackground, Dimensions, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableOpacity } from 'react-native'
+import { View, Text, StyleSheet, ImageBackground, Dimensions, TextInput, KeyboardAvoidingView, TouchableWithoutFeedback, Keyboard, TouchableOpacity, Platform } from 'react-native'
 import React, { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from "react-redux";
 import { UserGetProfileDetails, UserUpdatedProfileDetails, UserUpdatedProfilePic } from '../../../utils/API_Calls'
@@ -359,7 +359,7 @@ const Profile = () => {
             <View>
 
               {/* First Name */}
-              <Text style={{ marginBottom: 10 }}>{editToggle ? <Text>You can Updated Your Profile</Text> : <Text>You can View Your Profile</Text>}</Text>
+              <Text style={{ marginBottom: 10 }}>{editToggle ? <Text>You can update your profile</Text> : <Text>You can view your profile</Text>}</Text>
 
               <View style={styles.inputContainer}>
                 <View
@@ -470,7 +470,7 @@ const Profile = () => {
                 // bgColor={`${!isValid ? theme.colors.secondaryBlue : ""}`}
                 // bgColor={`${!isValid ? "rgba(220, 142, 128, 0.9)" : "rgba(242, 142, 128, 1)"}`}
                 >
-                  Updated Profile
+                  Update Profile
                 </Button>
                 : ""}
 

@@ -2,6 +2,7 @@ import { View, Text, ToastAndroid, StyleSheet, TouchableOpacity, Image, Pressabl
 import React, { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux';
 import { GetWalletAmountAPI, UserGetProfileDetails } from '../../utils/API_Calls';
+import { StatusBar } from 'expo-status-bar';
 
 
 
@@ -126,6 +127,7 @@ export default function Wallet({route}) {
   },[])
   return (
     <View>
+      <StatusBar style="dark" />
       <View
         style={{
           justifyContent: 'center',

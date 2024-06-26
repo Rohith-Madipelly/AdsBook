@@ -297,7 +297,7 @@ return (
     {/* Save */}
     {/* shares of {index} */}
     {/* </Text>
-      </TouchableOpacity> */}
+      </TouchableOpacity> */} 
 
 
 
@@ -318,24 +318,32 @@ return (
 };
 
 const styles = StyleSheet.create({
-  // container: {
+ 
+  container: {
+    position: 'absolute',
+    // bottom: -330,
+    // bottom: -(windowHeight - 15),
+    // top:(windowHeight-(windowHeight/3.10)),
+
+    bottom: Platform.select({
+      ios: -(windowHeight - 25), // width for iOS
+      android:-(windowHeight - 15), // width for Android
+      // web: 300, // width for Web
+      // default: 100, // default width
+    }),
+    left: 7,
+    width: 65,
+    zIndex: 20,
+  },
+
+  
+ // container: {
   //   position: "absolute",
   //   bottom: 25,
   //   right: 7,
   //   width: 65,
   //   zIndex: 20,
   // },
-  container: {
-    position: 'absolute',
-    // bottom: -330,
-    bottom: -(windowHeight - 15),
-    // top:(windowHeight-(windowHeight/3.10)),
-
-
-    left: 7,
-    width: 65,
-    zIndex: 20,
-  },
   btn: {
     alignItems: "center",
     marginBottom: 10,

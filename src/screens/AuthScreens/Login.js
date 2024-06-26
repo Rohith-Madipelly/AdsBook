@@ -50,8 +50,10 @@ const Login = () => {
 
     try {
       const { email, password } = user;
+      console.log(email, password);
       setSpinnerbool(true)
       const res = await UserLoginApi(email, password)
+      console.log(res)
       if (res) {
         const Message = res.data.message
         const token = res.data.token
@@ -95,7 +97,7 @@ const Login = () => {
         console.log("Error in Setting up the Request.")
       }
 
-      ToasterSender("Error in Setting up the Request.")
+      ToasterSender("Error in setting up the request.")
       ToasterSender({ Message: error.response.data.message })
       // ToasterSender({ Message: error })
 
@@ -157,7 +159,7 @@ const Login = () => {
               <Formik
                 // enableReinitialize
                 validateOnMount={true}
-                initialValues={{ email: "", password: "" }}
+                initialValues={{ email: "chinnu@admin.com", password: "Chinnu#143." }}
 
                 // onSubmit={submitHandler}
                 onSubmit={submitHandler}

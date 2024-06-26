@@ -7,8 +7,10 @@ import { SwiperFlatList } from 'react-native-swiper-flatlist'
 import ReelSingle from './ReelSingle'
 import { useSelector } from 'react-redux'
 import { GetVideosDataAPI, GetVideosDataAPI2 } from '../utils/API_Calls'
+import { StatusBar } from 'expo-status-bar'
 
 const ReelsComponent = ({ isReelPage }) => {
+    // <StatusBar style="light" />
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [playVideo, setPlayVideo] = useState(0);

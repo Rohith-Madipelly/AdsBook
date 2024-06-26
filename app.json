@@ -11,17 +11,11 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-
-
- 
-        "expo-build-properties":
-        {
-          "android": {
-            "usesCleartextTraffic": true
-          }
-        },
-
-
+    "expo-build-properties": {
+      "android": {
+        "usesCleartextTraffic": true
+      }
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -43,6 +37,9 @@
       "eas": {
         "projectId": "5bd9ddd9-77eb-4a87-b738-5152b4c2b0df"
       }
-    }
+    },
+    "plugins": [
+      "expo-font"
+    ]
   }
 }

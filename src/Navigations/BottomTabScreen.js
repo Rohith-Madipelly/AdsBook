@@ -8,17 +8,32 @@ import Wallet from '../screens/MainScreens/Wallet';
 import Reels from '../screens/MainScreens/Reels';
 import Reels2 from '../screens/MainScreens/Reels copy';
 import Profile from '../screens/MainScreens/Profile';
+import { Platform } from 'react-native';
 
 
 const Tab = createBottomTabNavigator();
 
 const BottomTabScreen = ({ route }) => {
+
+
+
+  const getTabBarHeight = () => {
+    if (Platform.OS === 'ios') {
+      // Check iOS version to apply different heights
+      const majorVersion = parseInt(Platform.Version, 10);
+      return majorVersion >= 11 ? 75 : 50; // iOS 11+ for devices with notches
+    }
+    return 50; // Default for Android
+  };
+
+
+
   return (
     <Tab.Navigator 
     screenOptions={({ route }) => ({
       tabBarShowLabel: false,
       tabBarStyle: {
-        height: 50
+        height: getTabBarHeight()
       },
       tabBarIcon: ({ focused, size, colour }) => {
         let iconName;
@@ -27,7 +42,7 @@ const BottomTabScreen = ({ route }) => {
           size = focused ? size + 8 : size + 2;
         } 
         else if (route.name === "Wallet") {
-          iconName = focused ? "wallet" : "ios-wallet-outline";
+          iconName = focused ? "wallet" : "wallet-outline";
           size = focused ? size + 8 : size + 2;
 
         }
@@ -38,12 +53,12 @@ const BottomTabScreen = ({ route }) => {
 
         }
         else if (route.name === "Activity") {
-          iconName = focused ? "ios-heart" : "ios-heart-outline";
+          iconName = focused ? "wallet" : "wallet-outline";
           size = focused ? size + 8 : size + 2;
 
         }
         else if (route.name === "Profile") {
-          iconName = focused ? "ios-person-circle" : "ios-person-outline";
+          iconName = focused ? "person-circle" :  "person-circle-outline" ;
           size = focused ? size + 8 : size + 2;
 
         }

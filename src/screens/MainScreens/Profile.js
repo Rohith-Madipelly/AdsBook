@@ -434,7 +434,7 @@ const PlatformChecker=()=>{
                       </View>
 
                       <View style={{ marginLeft: 14 }}>
-                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Help 123</Text>
+                        <Text style={[styles.Heading_u3, { marginTop: 2 }]}>Help</Text>
                       </View>
                     </View>
 
