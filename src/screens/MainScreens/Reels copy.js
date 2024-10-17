@@ -1,4 +1,4 @@
-import { Dimensions, Text,StyleSheet, View } from 'react-native'
+import { Dimensions, Text, StyleSheet, View } from 'react-native'
 import React, { Component } from 'react'
 // import Feather from "react-native-vector-icons/Feather"
 import ReelsComponent2 from '../../screenComponents/ReelsComponent copy'
@@ -18,30 +18,30 @@ const Reels = () => {
 
     // Use useFocusEffect to set SetReelPageActive when the screen is focused
     useFocusEffect(
-      React.useCallback(() => {
-        setSetReelPageActive(true);
-  
-        // Cleanup function when the component loses focus
-        return () => {
-          setSetReelPageActive(false);
-          // Any cleanup logic if needed
-        };
-      }, [])
+        React.useCallback(() => {
+            setSetReelPageActive(true);
+
+            // Cleanup function when the component loses focus
+            return () => {
+                setSetReelPageActive(false);
+                // Any cleanup logic if needed
+            };
+        }, [])
     );
 
     // console.log("isReelPage:-",SetReelPageActive)
     return (
-  
+
         <View style={{
-            marginTop:0,
+            marginTop: 0,
             width: windoWidth,
             height: windowHeight,
             // backgroundColor: 'black'
         }}>
-     <StatusBar style="light" />
+            <StatusBar style="light" />
 
             {/* Reels Header */}
-            
+
             <View style={{
                 position: 'absolute',
                 top: 30,
@@ -62,11 +62,11 @@ const Reels = () => {
                 }} /> */}
             </View>
 
-            <ReelsComponent2 isReelPage={SetReelPageActive}/>
+            <ReelsComponent2 isReelPage={SetReelPageActive} />
 
             {/* <Text>vsd</Text> */}
         </View>
-       
+
     )
 }
 
@@ -78,6 +78,6 @@ const styles = StyleSheet.create({
         right: 10,
         bottom: 70,
         zIndex: 100,
-      },
+    },
 
 })

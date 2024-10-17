@@ -160,12 +160,6 @@ export const GetVideosDataAPI = async (token) => {
 
 //Video api  locations based
 export const GetVideosDataAPI2 = async (ReqData,page,token) => {
-
-  // const ReqData2 = {
-  //   longitude: '78.384433',
-  //   latitude: '17.444594',
-  // };
-
   return await axios.post(`${GUEST_URL}/user/locationvideos?page=${page}`,
   ReqData,
    {

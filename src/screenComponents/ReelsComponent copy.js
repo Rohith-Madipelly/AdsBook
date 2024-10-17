@@ -14,7 +14,7 @@ const ReelsComponent = ({ isReelPage }) => {
 
     const [currentIndex, setCurrentIndex] = useState(0);
     const [playVideo, setPlayVideo] = useState(0);
-const [page,setpage]=useState(1)
+    const [page, setpage] = useState(1)
 
     const [videoData, setvideoData] = useState([])
     const [spinnerBool, setSpinnerbool] = useState(false)
@@ -23,7 +23,7 @@ const [page,setpage]=useState(1)
 
     try {
         if (tokenn != null) {
-            tokenn=  tokenn.replaceAll('"', '');
+            tokenn = tokenn.replaceAll('"', '');
         }
     }
     catch (err) {
@@ -36,12 +36,12 @@ const [page,setpage]=useState(1)
             const Location = {
                 longitude: '78.384433',
                 latitude: '17.444594',
-              };
-              
-            const res = await GetVideosDataAPI2(Location,page,tokenn)
+            };
 
-            var Data=res.data.locationVideos
-            console.log("Copyed Data",res.data.locationVideos)
+            const res = await GetVideosDataAPI2(Location, page, tokenn)
+
+            var Data = res.data.locationVideos
+            console.log("Copyed Data", res.data.locationVideos)
             setvideoData((prevItems) => [...prevItems, ...Data]);
             setSpinnerbool(false)
         }
@@ -81,11 +81,11 @@ const [page,setpage]=useState(1)
 
     const handleEndReached = () => {
         // setpage((prevPage) => [prevPage+1])
-        setpage(a=>a+1)
+        setpage(a => a + 1)
         console.warn(page)
         GetVideos()
         // console.log("dfsahvjr")
-      };
+    };
 
 
     const handleChangeIndexValue = ({ index }) => {
@@ -98,12 +98,12 @@ const [page,setpage]=useState(1)
             data={videoData}
             onChangeIndex={handleChangeIndexValue}
             // onMomentumScrollEnd={handleEndReached()}
-            onEndReached={() =>{handleEndReached()}}
+            onEndReached={() => { handleEndReached() }}
             onEndReachedThreshold={0.1}
             // loadMinimal
             loadMinimalSize={5}
             renderItem={({ item, index }) => (
-                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} tokenn={tokenn}/>
+                <ReelSingle item={item} index={index} currentIndex={currentIndex} play={isReelPage} tokenn={tokenn} />
             )}
             keyExtractor={(item, index) => index.toString()}
             // keyExtractor={(item, index) => index}
